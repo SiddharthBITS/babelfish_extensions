@@ -121,6 +121,7 @@ runs:
       shell: bash
 
     - name: Enable Ubuntu Coredumps
+      if: always()
       run: |
         sudo mkdir -p /var/coredumps
         sudo chmod a+w /var/coredumps
