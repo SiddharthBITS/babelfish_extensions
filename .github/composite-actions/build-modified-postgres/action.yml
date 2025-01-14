@@ -59,9 +59,20 @@ runs:
         rm -rf ~/.ccache
       shell: bash
 
-    - name: Compiler caching
+    - name: Compiler caching on PR
       id: compiler-cache
       uses: actions/cache@v4
+      if: github.event.pull_request.merged == false
+      with:
+        path:
+          ~/.ccache
+        key: 
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
+
+    - name: Compiler caching on Merge
+      id: compiler-cache
+      uses: actions/cache/save@v4
+      if: github.event.pull_request.merged == true
       with:
         path:
           ~/.ccache

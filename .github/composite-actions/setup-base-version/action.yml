@@ -266,3 +266,13 @@ runs:
         mkdir -p ~/upgrade
         cp test/python/output/upgrade_validation/* ~/upgrade
       shell: bash
+
+    #   Add cache save here
+    # - name: Save Cache
+    #   if: steps.cache-engine.outputs.cache-hit != 'true'
+    #   uses: actions/cache/save@v4
+    #   with:
+    #     path: 
+    #       ~/.ccache
+    #     key: 
+    #       ccache-linux-${{ hashFiles('postgresql_modified_for_babelfish/**') }}
