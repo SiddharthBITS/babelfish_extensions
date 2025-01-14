@@ -49,9 +49,6 @@ runs:
         
         $GITHUB_WORKSPACE/.github/scripts/clone_engine_repo "$REPOSITORY_OWNER" "$ENGINE_BRANCH"
 
-        cd ~
-        cd postgresql_modified_for_babelfish
-
         echo "Engine hashcode : ${{ github.sha }}"
         echo "COMMIT_HASH=$GITHUB_SHA" >> $GITHUB_ENV
         
