@@ -60,7 +60,6 @@ runs:
       shell: bash
 
     - name: Compiler caching
-    
       id: compiler-cache
       uses: actions/cache@v4
       with:
