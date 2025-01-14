@@ -70,7 +70,7 @@ runs:
           ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
 
     - name: Compiler caching on Merge
-      id: compiler-cache
+      id: compiler-cache-merge
       uses: actions/cache/save@v4
       if: github.event.pull_request.merged == true
       with:
