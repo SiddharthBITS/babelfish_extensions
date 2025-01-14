@@ -22,14 +22,12 @@ inputs:
     default: no
 
 runs:
-
   using: "composite"
   steps:
     - name: Remake Engine Repository
       run: |
         cd ..
         rm -rf postgresql_modified_for_babelfish
-
         if [[ $GITHUB_EVENT_NAME == "pull_request" ]]; then
           if [[ ${{inputs.engine_branch}} == "latest" ]]; then
             ENGINE_BRANCH=$GITHUB_HEAD_REF
@@ -37,7 +35,6 @@ runs:
             ENGINE_BRANCH=${{inputs.engine_branch}}
           fi            
           REPOSITORY_OWNER=$HEAD_OWNER
-
         else
           if [[ ${{inputs.engine_branch}} == "latest" ]]; then
             ENGINE_BRANCH=$GITHUB_REF_NAME
@@ -46,29 +43,20 @@ runs:
           fi
           REPOSITORY_OWNER=$GITHUB_REPOSITORY_OWNER
         fi
-        
         $GITHUB_WORKSPACE/.github/scripts/clone_engine_repo "$REPOSITORY_OWNER" "$ENGINE_BRANCH"
         cd postgresql_modified_for_babelfish
-
         echo "Engine hashcode : $(git rev-parse HEAD)"
         echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
-
         if [[ ${{inputs.tap_tests}} == "yes" ]]; then
           echo "MODE=tapTest" >> $GITHUB_ENV
-
         elif [[ ${{inputs.code_coverage}} == "yes" ]]; then
           echo "MODE=coverage" >> $GITHUB_ENV
-
         elif [[ ${{inputs.release_mode}} == "yes" ]]; then
           echo "MODE=releaseMode" >> $GITHUB_ENV
-
         else
           echo "MODE=default" >> $GITHUB_ENV
-
         fi
-
         rm -rf ~/.ccache
-
       shell: bash
 
     - name: Compiler caching
@@ -121,7 +109,6 @@ runs:
       run: |
         cd ..
         cd postgresql_modified_for_babelfish
-
         make -j 4 2>error.txt
         make install
         cd contrib && make && sudo make install
@@ -134,7 +121,6 @@ runs:
           export PATH=$HOME/${{ inputs.install_dir }}/bin:$PATH
           make
           make install
-
         elif [[ ${{inputs.engine_branch}} == *"__PG_15_"* ]]; then
           cd ../..
           rm -rf pg_hint_plan
@@ -143,7 +129,6 @@ runs:
           export PATH=$HOME/${{ inputs.install_dir }}/bin:$PATH
           make
           make install
-
         elif [[ ${{inputs.engine_branch}} != *"__PG_13_"* ]]; then
           cd ../..
           rm -rf pg_hint_plan
@@ -152,7 +137,6 @@ runs:
           export PATH=$HOME/${{ inputs.install_dir }}/bin:$PATH
           make
           make install
-          
         fi
       env:
         HEAD_OWNER: ${{ github.event.pull_request.head.repo.owner.login }}
