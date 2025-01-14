@@ -50,7 +50,7 @@ runs:
         $GITHUB_WORKSPACE/.github/scripts/clone_engine_repo "$REPOSITORY_OWNER" "$ENGINE_BRANCH"
         cd postgresql_modified_for_babelfish
 
-        echo "Engine hashcode : ${{ git rev-parse HEAD }}"
+        echo "Engine hashcode : $(git rev-parse HEAD)"
         echo "COMMIT_HASH=$GITHUB_SHA" >> $GITHUB_ENV
         
       shell: bash
