@@ -101,13 +101,15 @@ runs:
         cd ..
         cd postgresql_modified_for_babelfish
         ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 --enable-cassert CFLAGS="-ggdb" --with-libxml --with-uuid=ossp --with-icu --enable-tap-tests --with-gssapi
-      
+      shell: bash
+
     - name: Coverage
       if: env.TEST_TYPE == 'coverage' && steps.cache-engine.outputs.cache-hit != 'true'
       run: |
         cd ..
         cd postgresql_modified_for_babelfish
         ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 --enable-coverage --enable-cassert CFLAGS="-ggdb" --with-libxml --with-uuid=ossp --with-icu
+      shell: bash
 
     - name: Realase Mode
       if: env.TEST_TYPE == 'releaseMode' && steps.cache-engine.outputs.cache-hit != 'true'
@@ -115,6 +117,7 @@ runs:
         cd ..
         cd postgresql_modified_for_babelfish
         ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 CFLAGS="-ggdb -O2" --with-libxml --with-uuid=ossp --with-icu
+      shell: bash
 
     - name: Default Mode
       if: env.TEST_TYPE == 'default' && steps.cache-engine.outputs.cache-hit != 'true'
@@ -122,7 +125,7 @@ runs:
         cd ..
         cd postgresql_modified_for_babelfish
         ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 --enable-cassert CFLAGS="-ggdb" --with-libxml --with-uuid=ossp --with-icu
-
+      shell: bash
       
     - name: Build and Install the Modified PostgreSQL Instance and Run Tests
       if: ${{steps.cache-engine.outputs.cache-hit != 'true'}}
