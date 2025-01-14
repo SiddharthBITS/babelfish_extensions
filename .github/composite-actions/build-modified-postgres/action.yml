@@ -56,10 +56,10 @@ runs:
 
     - name: Cache Engine Build
       id: cache-engine
-      uses: actions/cache@v4
+      uses: actions/cache@v3
       with:
         path:
-          ~/.ccacheTest
+          ~/.ccache
         key: 
           ccache-linux-${{env.COMMIT_HASH}}
 
