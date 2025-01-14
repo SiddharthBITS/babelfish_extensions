@@ -66,7 +66,6 @@ runs:
           echo "TEST_TYPE=default" >> $GITHUB_ENV
 
         fi
-        
       shell: bash
 
     - name: Cache Engine Build
@@ -96,29 +95,29 @@ runs:
         sudo systemctl daemon-reexec
       shell: bash
 
-  - name: Tap test
-    if: ${{env.TEST_TYPE}} == tapTest && ${{steps.cache-engine.outputs.cache-hit != 'true'}}
-    run: |
-      cd ..
-      cd postgresql_modified_for_babelfish
-      ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 --enable-cassert CFLAGS="-ggdb" --with-libxml --with-uuid=ossp --with-icu --enable-tap-tests --with-gssapi
-    
+    - name: Tap test
+      if: ${{ env.TEST_TYPE == 'tapTest' && steps.cache-engine.outputs.cache-hit != 'true' }}
+      run: |
+        cd ..
+        cd postgresql_modified_for_babelfish
+        ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 --enable-cassert CFLAGS="-ggdb" --with-libxml --with-uuid=ossp --with-icu --enable-tap-tests --with-gssapi
+      
     - name: Coverage
-      if: ${{env.TEST_TYPE}} == coverage && ${{steps.cache-engine.outputs.cache-hit != 'true'}}
+      if: ${{ env.TEST_TYPE == 'coverage' && steps.cache-engine.outputs.cache-hit != 'true' }}
       run: |
         cd ..
         cd postgresql_modified_for_babelfish
         ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 --enable-coverage --enable-cassert CFLAGS="-ggdb" --with-libxml --with-uuid=ossp --with-icu
 
     - name: Realase Mode
-      if: ${{env.TEST_TYPE}} == releaseMode && ${{steps.cache-engine.outputs.cache-hit != 'true'}}
+      if: ${{ env.TEST_TYPE == 'releaseMode' && steps.cache-engine.outputs.cache-hit != 'true' }}
       run: |
         cd ..
         cd postgresql_modified_for_babelfish
         ./configure CC='ccache gcc' --prefix=$HOME/${{ inputs.install_dir }}/ --with-python PYTHON=/usr/bin/python3.8 CFLAGS="-ggdb -O2" --with-libxml --with-uuid=ossp --with-icu
 
     - name: Default Mode
-      if: ${{env.TEST_TYPE}} == default && ${{steps.cache-engine.outputs.cache-hit != 'true'}}
+      if: ${{ env.TEST_TYPE == 'default' && steps.cache-engine.outputs.cache-hit != 'true' }}
       run: |
         cd ..
         cd postgresql_modified_for_babelfish
