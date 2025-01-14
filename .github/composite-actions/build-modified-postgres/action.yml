@@ -63,13 +63,11 @@ runs:
           ccache-linux-${{env.COMMIT_HASH}}
 
     - name: Show cache stats
-      if: always()
       run: |
         ccache -s
       shell: bash
 
     - name: Enable Ubuntu Coredumps
-      if: always()
       run: |
         sudo mkdir -p /var/coredumps
         sudo chmod a+w /var/coredumps
