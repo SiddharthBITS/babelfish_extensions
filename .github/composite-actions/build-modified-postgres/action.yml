@@ -85,6 +85,8 @@ runs:
       with:
         path:
           ~/.ccache
+        key: 
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
         restore-keys:
           ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
 
