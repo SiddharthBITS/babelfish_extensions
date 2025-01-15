@@ -276,6 +276,6 @@ runs:
           ccache-linux-${{env.CCACHE_KEY}}
 
     - name: Delete cache
-      runs: |
+      run: |
         rm -rf ~/.ccache
       shell: bash
