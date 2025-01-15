@@ -273,7 +273,7 @@ runs:
         path: 
           ~/.ccache
         key: 
-          ccache-linux-${{env.CCACHE_KEY}}
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.NOW}}
 
     - name: Delete cache
       run: |
