@@ -269,12 +269,21 @@ runs:
 
     - name: Save Cache
       uses: actions/cache/save@v4
+      if: github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.merged == false)
       with:
         path: 
           ~/.ccache
         key: 
-          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
-#          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.NOW}}
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-earlySave
+
+    - name: Save Cache on Merge
+      uses: actions/cache/save@v4
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      with:
+        path: 
+          ~/.ccache
+        key:
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.MERGE_COMMIT_SHA}}-earlySave
 
     - name: Delete cache
       run: |

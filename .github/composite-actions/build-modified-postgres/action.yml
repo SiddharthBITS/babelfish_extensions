@@ -88,6 +88,9 @@ runs:
         key: 
           ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
         restore-keys:
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.MERGE_COMMIT_SHA}}-earlySave
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.MERGE_COMMIT_SHA}}
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-earlySave
           ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
 
     - name: Compiler caching on Merge
@@ -98,7 +101,7 @@ runs:
         path:
           ~/.ccache
         key:
-          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.MERGE_COMMIT_SHA}}      
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.MERGE_COMMIT_SHA}}     
 
     - name: Show cache stats
       run: |
