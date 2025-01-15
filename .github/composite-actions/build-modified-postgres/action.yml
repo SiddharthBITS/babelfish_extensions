@@ -57,7 +57,7 @@ runs:
           echo "MODE=default" >> $GITHUB_ENV
         fi
         rm -rf ~/.ccache
-        echo "CCACHE_KEY=${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.NOW}}" >> "$GITHUB_ENV"
+        echo "CCACHE_KEY=${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.NOW}}" >> $GITHUB_ENV
       shell: bash
 
     - name: Compiler caching on PR
