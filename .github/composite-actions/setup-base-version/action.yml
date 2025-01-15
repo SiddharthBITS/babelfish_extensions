@@ -266,3 +266,16 @@ runs:
         mkdir -p ~/upgrade
         cp test/python/output/upgrade_validation/* ~/upgrade
       shell: bash
+
+    - name: Save Cache
+      uses: actions/cache/save@v4
+      with:
+        path: 
+          ~/.ccache
+        key: 
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-${{env.NOW}}
+
+    - name: Delete cache
+      run: |
+        rm -rf ~/.ccache
+      shell: bash
