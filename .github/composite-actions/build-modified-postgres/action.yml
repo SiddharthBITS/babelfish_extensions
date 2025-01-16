@@ -48,26 +48,26 @@ runs:
         cd postgresql_modified_for_babelfish
         rm -rf ~/.ccache
         if [[ ${{inputs.tap_tests}} == "yes" ]]; then
-          echo "CCACHE_KEY=$(git rev-parse --short HEAD)-tapTest" >> $GITHUB_ENV
+          echo "CRESTORE_KEY=$(git rev-parse --short HEAD)-tapTest" >> $GITHUB_ENV
         elif [[ ${{inputs.code_coverage}} == "yes" ]]; then
-          echo "CCACHE_KEY=$(git rev-parse --short HEAD)-coverage" >> $GITHUB_ENV
+          echo "CRESTORE_KEY=$(git rev-parse --short HEAD)-coverage" >> $GITHUB_ENV
         elif [[ ${{inputs.release_mode}} == "yes" ]]; then
-          echo "CCACHE_KEY=$(git rev-parse --short HEAD)-release" >> $GITHUB_ENV
+          echo "CRESTORE_KEY=$(git rev-parse --short HEAD)-release" >> $GITHUB_ENV
         else
-          echo "CCACHE_KEY=$(git rev-parse --short HEAD)-default" >> $GITHUB_ENV
+          echo "CRESTORE_KEY=$(git rev-parse --short HEAD)-default" >> $GITHUB_ENV
         fi
       shell: bash
 
     - uses: actions/cache/restore@v4
       id: restore-ccache
-      if: ${{ github.event_name == 'pull_request' }}
+      if: ${{ github.event_name == 'pull_request' }} || ${{ inputs.code_coverage == 'yes' }}
       with:
         path: 
           ~/.ccache
         key: 
           random-random
         restore-keys: 
-          ${{ env.CCACHE_KEY }}
+          ${{ env.CRESTORE_KEY }}
 
     - name: Save cache if cache hit fails in pull requests
       if: ${{ github.event_name == 'pull_request' }}
