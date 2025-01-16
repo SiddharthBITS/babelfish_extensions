@@ -70,13 +70,13 @@ runs:
           ${{ env.CCACHE_KEY }}
 
     - name: Save cache if cache hit fails in pull requests
-      if: ${{ github.event_name == 'pull_request' }} && steps.restore-ccache.outcome == 'success' && steps.restore-ccache.outputs.cache-matched-key == ''
+      if: ${{ github.event_name == 'pull_request' }} && steps.restore-ccache.outcome == 'success' && ${{ steps.restore-ccache.outputs.cache-matched-key == '' }}
       run: |
         echo "SAVE_CCACHE=1" >> $GITHUB_ENV
       shell: bash
 
     - name: Save cache if cache hit fails in pull requests
-      if: steps.restore-ccache.outputs.cache-matched-key != ''
+      if: ${{ steps.restore-ccache.outputs.cache-matched-key != '' }}
       run: |
         echo "SAVE_CCACHE=" >> $GITHUB_ENV
       shell: bash
