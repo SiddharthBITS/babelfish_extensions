@@ -67,7 +67,7 @@ runs:
         key: 
           random-random
         restore-keys: 
-          ${{ env.CRESTORE_KEY }}
+          ccache-${{ env.CRESTORE_KEY }}
 
     - name: Save cache if cache hit fails in pull requests
       if: ${{ github.event_name == 'pull_request' }}
@@ -81,7 +81,7 @@ runs:
 
     - name: Build and Install the Modified PostgreSQL Instance and Run Tests
       run: |
-        echo $env.SAVE_CCACHE
+        echo "${{env.SAVE_CCACHE}}"
         echo "${{ steps.restore-ccache.outputs.cache-matched-key }}"
         cd ..
         cd postgresql_modified_for_babelfish

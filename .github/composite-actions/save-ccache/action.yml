@@ -1,4 +1,4 @@
-name: 'Save Ccache on push'
+name: 'Save ccache on push'
 
 runs:
   using: "composite"
@@ -16,7 +16,7 @@ runs:
         path: 
           ~/.ccache
         key: 
-          ${{ env.CCACHE_KEY }}
+          ccache-${{ env.CCACHE_KEY }}
 
     - name: Clean ccache directory and unset env variables
       if: always()
