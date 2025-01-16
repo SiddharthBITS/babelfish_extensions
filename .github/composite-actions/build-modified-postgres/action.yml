@@ -131,7 +131,7 @@ runs:
       run: |
         cd ..
         cd postgresql_modified_for_babelfish
-        make -j 4 2>error.txt
+        make -j 4
         make install
         cd contrib && make && sudo make install
 
@@ -151,10 +151,18 @@ runs:
           export PATH=$HOME/${{ inputs.install_dir }}/bin:$PATH
           make
           make install
-        elif [[ ${{inputs.engine_branch}} != *"__PG_13_"* ]]; then
+        elif [[ ${{inputs.engine_branch}} == *"__PG_16_"* ]]; then
           cd ../..
           rm -rf pg_hint_plan
           git clone --depth 1 --branch REL16_1_6_0 https://github.com/ossc-db/pg_hint_plan.git
+          cd pg_hint_plan
+          export PATH=$HOME/${{ inputs.install_dir }}/bin:$PATH
+          make
+          make install
+        elif [[ ${{inputs.engine_branch}} != *"__PG_13_"* ]]; then
+          cd ../..
+          rm -rf pg_hint_plan
+          git clone --depth 1 --branch REL17_1_7_0 https://github.com/ossc-db/pg_hint_plan.git
           cd pg_hint_plan
           export PATH=$HOME/${{ inputs.install_dir }}/bin:$PATH
           make
