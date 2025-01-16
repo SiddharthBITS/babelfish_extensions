@@ -59,36 +59,46 @@ runs:
         rm -rf ~/.ccache
       shell: bash
 
-    - name: Set merge commit sha
+    # - name: Set merge commit sha
+    #   if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+    #   run: |
+    #     echo "MERGE_COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+    #   shell: bash
+
+    - name: Delete cache on Merge
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-      run: |
-        echo "MERGE_COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
-      shell: bash
-
-    - name: Compiler caching on PR
-      id: compiler-cache
       uses: actions/cache@v4
-      if: github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.merged == false)
-      with:
-        path:
-          ~/.ccache
-        key: 
-          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
-        restore-keys:
-          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}
-#         ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
-#         ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}-earlySave
-#         ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-earlySave
-
-    - name: Compiler caching on Merge
-      id: compiler-cache-merge
-      uses: actions/cache@v4
-      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
       with:
         path:
           ~/.ccache
         key:
-          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}     
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
+        delete-cache: 
+          true
+
+    - name: Compiler caching on PR
+      id: compiler-cache
+      uses: actions/cache@v4
+      with:
+        path:
+          ~/.ccache
+        key:
+          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
+        # restore-keys:
+        #   ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}
+        #   ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
+        #   ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}-earlySave
+        #   ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-earlySave
+
+    # - name: Compiler caching on Merge
+    #   id: compiler-cache-merge
+    #   uses: actions/cache@v4
+    #   if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    #   with:
+    #     path:
+    #       ~/.ccache
+    #     key:
+    #       ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}     
 
     - name: Show cache stats
       run: |
