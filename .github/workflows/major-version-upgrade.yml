@@ -169,6 +169,10 @@ jobs:
         uses: ./.github/composite-actions/build-postgis-extension
         with:
           install_dir: ${{env.NEW_INSTALL_DIR}}
+      
+      - name: Save cache
+        if: always() && steps.build-postgis-extension.outcome == 'success'
+        uses: ./.github/composite-actions/save-ccache
 
       - name: Setup new data directory
         id: setup-new-datadir
