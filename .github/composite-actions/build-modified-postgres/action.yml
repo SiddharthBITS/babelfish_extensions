@@ -76,7 +76,7 @@ runs:
           ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
         restore-keys:
           ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}
-          ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
+#         ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}
 #         ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-isMerge-${{env.MERGE_COMMIT_SHA}}-earlySave
 #         ccache-linux-${{env.COMMIT_HASH}}-${{env.MODE}}-earlySave
 
