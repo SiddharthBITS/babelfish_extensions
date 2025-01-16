@@ -10,8 +10,9 @@ runs:
         echo "CCACHE_KEY=${{env.CRESTORE_KEY}}-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       shell: bash
 
-    - uses: actions/cache/save@v4
-      if: always() && ${{ env.CRESTORE_KEY != '' && (github.event_name != 'pull_request' || env.SAVE_CCACHE == 1)}}
+    - name: Save ccache
+      uses: actions/cache/save@v4
+      if: always() && ${{ github.event_name != 'pull_request' || env.SAVE_CCACHE == 1 }}
       with:
         path: 
           ~/.ccache
