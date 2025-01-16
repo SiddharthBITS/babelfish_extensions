@@ -60,7 +60,7 @@ runs:
       shell: bash
 
     - name: Set merge commit sha
-      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true 
       run: |
         echo "MERGE_COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
       shell: bash
