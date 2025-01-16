@@ -72,16 +72,17 @@ runs:
     - name: Save cache if cache hit fails in pull requests
       if: ${{ github.event_name == 'pull_request' }}
       run: |
-        if [[ ${{ steps.restore-ccache.outputs.cache-matched-key }} == '' ]]; then
+        if [[ '${{ steps.restore-ccache.outputs.cache-matched-key }}' == '' ]]; then
           echo "SAVE_CCACHE=1" >> $GITHUB_ENV
-        elif [[ ${{ steps.restore-ccache.outputs.cache-matched-key }} != '' ]]; then
+        elif [[ ${{ 'steps.restore-ccache.outputs.cache-matched-key' }} != '' ]]; then
           echo "SAVE_CCACHE=" >> $GITHUB_ENV
         fi
       shell: bash
 
     - name: Build and Install the Modified PostgreSQL Instance and Run Tests
       run: |
-        echo "'${{ steps.restore-ccache.outputs.cache-matched-key }}'"
+        echo $env.SAVE_CCACHE
+        echo "${{ steps.restore-ccache.outputs.cache-matched-key }}"
         cd ..
         cd postgresql_modified_for_babelfish
         if [[ ${{inputs.tap_tests}} == "yes" ]]; then
