@@ -49,8 +49,8 @@ runs:
         extension_branch: ${{ inputs.extension_branch }}
 
     - name: Save cache
-      if: always()
-      uses: ./.github/composite-actions/save-cache-on-push
+      if: always() && steps.build-extensions-newer == 'success'
+      uses: ./.github/composite-actions/save-ccache
 
     # Not created and used composite action update-extensions here since, in the previous step it has 
     # checked out a branch/tag which may not have the updated update-extension composite action
