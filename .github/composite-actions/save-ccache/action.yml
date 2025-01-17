@@ -21,7 +21,7 @@ runs:
 
     - name: Save ccache
       uses: actions/cache/save@v4
-      if: always() && ${{ env.SAVE_CACHE_HERE }} == 1
+      if: always() && ${{ env.SAVE_CACHE_HERE == 1}}
       with:
         path: 
           ~/.ccache
