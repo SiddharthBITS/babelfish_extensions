@@ -8,6 +8,13 @@ runs:
       if: always()
       run: |
         echo "CCACHE_KEY=${{env.CRESTORE_KEY}}-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        echo "Event : ${{ github.event_name }}"
+        echo "Save ccache : ${{ env.SAVE_CCACHE }}"
+        if [[ ${{ github.event_name != 'pull_request' || env.SAVE_CCACHE == 1 }} == true ]]; then
+          echo "Cache to be Saved"
+        else
+          echo "Cache shouldn't be Saved"
+        fi
       shell: bash
 
     - name: Save ccache
