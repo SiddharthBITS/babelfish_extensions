@@ -12,14 +12,16 @@ runs:
         echo "Save ccache : ${{ env.SAVE_CCACHE }}"
         if [[ ${{ github.event_name != 'pull_request' || env.SAVE_CCACHE == 1 }} == true ]]; then
           echo "Cache to be Saved"
+          echo "SAVE_CACHE_HERE='true'" >> $GITHUB_ENV
         else
           echo "Cache shouldn't be Saved"
+          echo "SAVE_CACHE_HERE='false" >> $GITHUB_ENV
         fi
       shell: bash
 
     - name: Save ccache
       uses: actions/cache/save@v4
-      if: always() && ${{ github.event_name != 'pull_request' || env.SAVE_CCACHE == 1 }}
+      if: always() && ${{ env.SAVE_CACHE_HERE }} == 'true'
       with:
         path: 
           ~/.ccache
@@ -33,3 +35,4 @@ runs:
         rm -rf ~/.ccache
         echo "CCACHE_KEY=" >> $GITHUB_ENV
         echo "SAVE_CCACHE=" >> $GITHUB_ENV
+        echo "SAVE_CACHE_HERE=" >> $GITHUB_ENV
