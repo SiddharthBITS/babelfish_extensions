@@ -36,3 +36,4 @@ runs:
         echo "CCACHE_KEY=" >> $GITHUB_ENV
         echo "SAVE_CCACHE=" >> $GITHUB_ENV
         echo "SAVE_CACHE_HERE=" >> $GITHUB_ENV
+        echo "CRESTORE_KEY=" >> $GITHUB_ENV

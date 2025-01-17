@@ -24,7 +24,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Remake engine repository
+    - name: Checkout Modified PostgreSQL for Babelfish
       run: |
         cd ..
         rm -rf postgresql_modified_for_babelfish
