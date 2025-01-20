@@ -37,6 +37,8 @@ public class TestQueryFile {
     static ArrayList<String> testsToRun = new ArrayList();
     static HashSet<String> testsToIgnore = new HashSet();
     static File diffFile;
+    static int majorVersion = 13;
+    static int minorVersion = 1;
     
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
@@ -159,6 +161,47 @@ public class TestQueryFile {
         } else throw new ClassNotFoundException("Driver not found for: " + JDBCDriver +". Choose from either 'sqlserver' or 'postgresql'");
     }
 
+    // Getting the base version of the scheduleFile
+    public static int[] getVersions(String path)
+    {
+        if (path == null || path.isEmpty())
+        {
+            return {0,0};
+        }
+    
+        int lastSlash = path.lastIndexOf('/');
+        if (lastSlash == -1)
+        {
+            return {0,0};
+        }
+    
+        int secondLastSlash = path.lastIndexOf('/', lastSlash - 1);
+        if (secondLastSlash == -1) 
+        {
+            return {0,0};
+        }
+    
+        String versionString = path.substring(secondLastSlash + 1, lastSlash);
+        String[] pathSections = versionString.split("_");
+    
+        if (pathSections.length != 2) 
+        {
+            return {0,0};
+        }
+    
+        try 
+        {
+            int[] versions = new int[2];
+            versions[0] = Integer.parseInt(pathSections[0]);
+            versions[1] = Integer.parseInt(pathSections[1]);
+            return versions;
+        }
+        catch (NumberFormatException e) 
+        {
+            return {0,0};
+        }
+    }
+
     // test data is seeded from here
     static Stream<String> inputFileNames() {
         File dir = new File(inputFilesDirectoryPath);
@@ -166,7 +209,11 @@ public class TestQueryFile {
         File parallelQueryTestIgnoreFile = new File(parallelQueryTestIgnoreFileName);
         File dbCollationIgnoreFile = new File(dbCollationIgnoreFileName);
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
-        
+
+        int[] versions = getVersions(scheduleFileName);
+        majorVersion = versions[0];
+        minorVersion = versions[1];
+
         try (BufferedReader br = new BufferedReader(new FileReader(scheduleFile))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -268,18 +315,26 @@ public class TestQueryFile {
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
-        if (isUpgradeTestMode) {
-            if (connection_bbl != null) connection_bbl.close();
+
+        if(!strictlySingleRun && majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6))
+        {
+            if (connection_bbl == null) return;
+            try{
+                connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+        else
+        {    
+            if (connection_bbl != null) 
+            {
+                connection_bbl.close();
+            }
             connection_bbl = null;
             return;
-        }
-        if (connection_bbl == null)
-            return;
-        try{
-            connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
