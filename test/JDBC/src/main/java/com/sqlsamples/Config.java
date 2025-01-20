@@ -33,6 +33,7 @@ public class Config {
     static boolean checkSingleDbModeExpected = false;
     static String testFileRoot = properties.getProperty("testFileRoot");
     static boolean isUpgradeTestMode =  Boolean.parseBoolean(properties.getProperty("isUpgradeTestMode"));
+    static boolean isStrictlySingleRun =  Boolean.parseBoolean(properties.getProperty("isStrictlySingleRun"));
     static long defaultSLA = Long.parseLong(properties.getProperty("defaultSLA"));
     static boolean isdbCollationMode = Boolean.parseBoolean(properties.getProperty("isdbCollationMode"));
     static String dbCollationIgnoreFileName = "./db_collation_jdbc_schedule";
