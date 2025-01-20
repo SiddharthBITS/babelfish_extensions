@@ -166,19 +166,19 @@ public class TestQueryFile {
     {
         if (path == null || path.isEmpty())
         {
-            return {0,0};
+            return new int[]{0, 0};
         }
     
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1)
         {
-            return {0,0};
+            return new int[]{0, 0};
         }
     
         int secondLastSlash = path.lastIndexOf('/', lastSlash - 1);
         if (secondLastSlash == -1) 
         {
-            return {0,0};
+            return new int[]{0, 0};
         }
     
         String versionString = path.substring(secondLastSlash + 1, lastSlash);
@@ -186,7 +186,7 @@ public class TestQueryFile {
     
         if (pathSections.length != 2) 
         {
-            return {0,0};
+            return new int[]{0, 0};
         }
     
         try 
@@ -198,7 +198,7 @@ public class TestQueryFile {
         }
         catch (NumberFormatException e) 
         {
-            return {0,0};
+            return new int[]{0, 0};
         }
     }
 
@@ -316,7 +316,7 @@ public class TestQueryFile {
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
 
-        if(!strictlySingleRun && majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6))
+        if(!strictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0))
         {
             if (connection_bbl == null) return;
             try{
