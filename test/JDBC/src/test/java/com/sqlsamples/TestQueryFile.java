@@ -316,7 +316,7 @@ public class TestQueryFile {
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
 
-        if(!strictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0))
+        if(!strictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
         {
             if (connection_bbl == null) return;
             try{
