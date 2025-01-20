@@ -56,3 +56,6 @@ isUpgradeTestMode = false
 
 # Default SLA in milliseconds
 defaultSLA = 40000
+
+# WHETHER THE TEST SHOULD BE STRICTLY SINGLE RUN
+isStrictlySingleRun = false;
