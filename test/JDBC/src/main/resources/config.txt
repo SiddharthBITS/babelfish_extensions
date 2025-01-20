@@ -34,7 +34,7 @@ outputErrorCode = true
 ############################################ WHICH TEST TO RUN ############################################
 
 # PLEASE LOOK AT THE jdbc_schedule FILE
-scheduleFile = ./jdbc_schedule
+scheduleFile = ./upgrade/13_6/schedule
 
 # WHETHER TEST MODE IS PARALLEL QUERY MODE ON
 isParallelQueryMode = false

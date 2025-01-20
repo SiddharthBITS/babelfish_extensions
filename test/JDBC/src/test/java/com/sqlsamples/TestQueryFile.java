@@ -162,23 +162,26 @@ public class TestQueryFile {
     }
 
     // Getting the base version of the scheduleFile
-    public static int[] getVersions(String path)
+    public static void setVersions(String path)
     {
+        System.out.println("VersionCheck : Set Versions called.");
+        majorVersion = 0;
+        minorVersion = 0;
         if (path == null || path.isEmpty())
         {
-            return new int[]{0, 0};
+            return;
         }
     
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1)
         {
-            return new int[]{0, 0};
+            return;
         }
     
         int secondLastSlash = path.lastIndexOf('/', lastSlash - 1);
         if (secondLastSlash == -1) 
         {
-            return new int[]{0, 0};
+            return;
         }
     
         String versionString = path.substring(secondLastSlash + 1, lastSlash);
@@ -186,7 +189,7 @@ public class TestQueryFile {
     
         if (pathSections.length != 2) 
         {
-            return new int[]{0, 0};
+            return;
         }
     
         try 
@@ -194,11 +197,11 @@ public class TestQueryFile {
             int[] versions = new int[2];
             versions[0] = Integer.parseInt(pathSections[0]);
             versions[1] = Integer.parseInt(pathSections[1]);
-            return versions;
+            return;
         }
         catch (NumberFormatException e) 
         {
-            return new int[]{0, 0};
+            return;
         }
     }
 
@@ -210,9 +213,9 @@ public class TestQueryFile {
         File dbCollationIgnoreFile = new File(dbCollationIgnoreFileName);
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
 
-        int[] versions = getVersions(scheduleFileName);
-        majorVersion = versions[0];
-        minorVersion = versions[1];
+        System.out.println("VersionCheck : Schedule file path: " + scheduleFileName);
+        setVersions(scheduleFileName);
+        System.out.println("VersionCheck : Version set to : " + majorVersion + "_" + minorVersion);
 
         try (BufferedReader br = new BufferedReader(new FileReader(scheduleFile))) {
             String line;
