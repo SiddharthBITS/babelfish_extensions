@@ -1,6 +1,7 @@
 package com.sqlsamples;
 
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.units.qual.min;
 import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -169,18 +170,21 @@ public class TestQueryFile {
         minorVersion = 0;
         if (path == null || path.isEmpty())
         {
+            System.out.println("VersionCheck : path == null || path.isEmpty()");
             return;
         }
     
         int lastSlash = path.lastIndexOf('/');
         if (lastSlash == -1)
         {
+            System.out.println("VersionCheck : lastSlash == -1");
             return;
         }
     
         int secondLastSlash = path.lastIndexOf('/', lastSlash - 1);
         if (secondLastSlash == -1) 
         {
+            System.out.println("VersionCheck : secondLastSlash == -1");
             return;
         }
     
@@ -189,18 +193,21 @@ public class TestQueryFile {
     
         if (pathSections.length != 2) 
         {
+            System.out.println("VersionCheck : pathSections.length != 2");
             return;
         }
     
         try 
         {
             int[] versions = new int[2];
-            versions[0] = Integer.parseInt(pathSections[0]);
-            versions[1] = Integer.parseInt(pathSections[1]);
+            majorVersion = Integer.parseInt(pathSections[0]);
+            minorVersion = Integer.parseInt(pathSections[1]);
+            System.out.println("VersionCheck : Normal Operations : Version set to : " + majorVersion + "_" + minorVersion);
             return;
         }
         catch (NumberFormatException e) 
         {
+            System.out.println("VersionCheck : NumberFormatException");
             return;
         }
     }
