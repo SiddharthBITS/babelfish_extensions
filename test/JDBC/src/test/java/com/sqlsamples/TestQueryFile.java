@@ -221,7 +221,16 @@ public class TestQueryFile {
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
 
         System.out.println("VersionCheck : Schedule file path: " + scheduleFileName);
-        setVersions(scheduleFileName);
+        if(scheduleFileName == "dummy_schedule")
+        {
+            System.out.println("VersionCheck : DummyTest");
+            majorVersion = 1;
+            minorVersion = 1;
+        }
+        else
+        {
+            setVersions(scheduleFileName);
+        }
         System.out.println("VersionCheck : Version set to : " + majorVersion + "_" + minorVersion);
 
         try (BufferedReader br = new BufferedReader(new FileReader(scheduleFile))) {
