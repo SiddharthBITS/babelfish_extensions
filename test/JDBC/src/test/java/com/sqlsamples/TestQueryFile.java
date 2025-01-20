@@ -314,27 +314,42 @@ public class TestQueryFile {
     
     // close connections that are not null after every test
     @AfterEach
-    public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
-
-        if(!isStrictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
+    public void closeConnections() throws SQLException, ClassNotFoundException, Throwable 
+    {
+        if (isUpgradeTestMode) 
         {
-            if (connection_bbl == null) return;
-            try{
-                connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            return;
-        }
-        else
-        {    
-            if (connection_bbl != null) 
+            if(!isStrictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
             {
-                connection_bbl.close();
+                if (connection_bbl == null) 
+                {
+                    return;
+                }
+                try{
+                    connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return;
             }
-            connection_bbl = null;
+            else
+            {    
+                if (connection_bbl != null) 
+                {
+                    connection_bbl.close();
+                }
+                connection_bbl = null;
+                return;
+            }
+        }
+        if (connection_bbl == null)
             return;
+        try
+        {
+            connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
