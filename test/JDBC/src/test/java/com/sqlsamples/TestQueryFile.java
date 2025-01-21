@@ -299,6 +299,7 @@ public class TestQueryFile {
                     return;
                 }
                 try{
+                    System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " resetting");
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch (Exception e) {
@@ -310,6 +311,7 @@ public class TestQueryFile {
             {    
                 if (connection_bbl != null) 
                 {
+                    System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " closing");
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -320,6 +322,7 @@ public class TestQueryFile {
             return;
         try
         {
+            System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " resetting");
             connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
         }
         catch (Exception e) {
