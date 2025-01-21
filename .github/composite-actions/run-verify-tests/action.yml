@@ -75,6 +75,7 @@ runs:
         for filename in $(grep -v "^ignore.*\|^#.*\|^cmd.*\|^all.*\|^$" upgrade/$base_dir/schedule); do
           sed -i "s/\b$filename[ ]*\b$/$filename-vu-verify\\n$filename-vu-cleanup/g" upgrade/$base_dir/schedule
         done
+        export engineVersion=$base_dir
         export scheduleFile=upgrade/$base_dir/schedule
         mvn -B -ntp test
       shell: bash
