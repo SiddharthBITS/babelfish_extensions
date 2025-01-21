@@ -19,7 +19,7 @@ runs:
           export PATH=~/${{env.INSTALL_DIR}}/bin:$PATH
           export PG_SRC=~/work/babelfish_extensions/postgresql_modified_for_babelfish
           export inputFilesPath=${{inputs.input_dir}}
-          export engineVersion="justTest"
+          export engineVersion=justTest
           cd test/JDBC/
           if [[ '${{ inputs.migration_mode }}' == 'single-db' ]];then
             export isSingleDbMode=true

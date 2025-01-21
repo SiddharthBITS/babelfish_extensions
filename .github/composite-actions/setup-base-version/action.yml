@@ -195,8 +195,8 @@ runs:
           base_dir="singledb"
         fi
 
-        export engineVersion=$base_dir
-        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
+        export engineVersion=${{ matrix.upgrade-path.path[0] }}
+        echo "ENGINE_VERSION=$${{ matrix.upgrade-path.path[0] }}" >> $GITHUB_ENV
         export inputFilesPath=upgrade/$base_dir/preparation
         mvn -B -ntp test
 
@@ -217,8 +217,8 @@ runs:
         for filename in $(grep -v "^ignore.*\|^#.*\|^cmd.*\|^all.*\|^$" upgrade/$base_dir/schedule); do
           sed -i "s/\b$filename[ ]*\b$/$filename-vu-prepare/g" upgrade/$base_dir/schedule
         done
-        export engineVersion=$base_dir
-        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
+        export engineVersion=${{ matrix.upgrade-path.path[0] }}
+        echo "ENGINE_VERSION=$${{ matrix.upgrade-path.path[0] }}" >> $GITHUB_ENV
         export scheduleFile=upgrade/$base_dir/schedule
         mvn -B -ntp test
       shell: bash

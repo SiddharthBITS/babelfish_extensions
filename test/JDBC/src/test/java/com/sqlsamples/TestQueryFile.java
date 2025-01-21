@@ -170,7 +170,7 @@ public class TestQueryFile {
         File dbCollationIgnoreFile = new File(dbCollationIgnoreFileName);
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
 
-        System.out.println("VersionCheck : Version : " + engineVersion);
+        System.out.println("VersionCheck-1 : Version : " + engineVersion);
         if(engineVersion == "singledb" || engineVersion == "replication" || engineVersion == "latest" || engineVersion == null)
         {
             majorVersion = 0;

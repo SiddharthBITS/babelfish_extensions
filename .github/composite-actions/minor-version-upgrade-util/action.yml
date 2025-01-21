@@ -97,16 +97,16 @@ runs:
         if [[ "$tar_dir" == *"latest"* ]]; then
           tar_dir="latest"
         fi
-        export engineVersion=$tar_dir
-        echo "ENGINE_VERSION=$tar_dir" >> $GITHUB_ENV
+        export engineVersion=${{ matrix.upgrade-path.last_version }}
+        echo "ENGINE_VERSION=${{ matrix.upgrade-path.last_version }}" >> $GITHUB_ENV
         export inputFilesPath=upgrade/$tar_dir/verification_cleanup/$base_dir
         mvn -B -ntp test
         export inputFilesPath=input
         for filename in $(grep -v "^ignore.*\|^#.*\|^cmd.*\|^all.*\|^$" upgrade/$base_dir/schedule); do
           sed -i "s/\b$filename[ ]*\b$/$filename-vu-verify\\n$filename-vu-cleanup/g" upgrade/$base_dir/schedule
         done
-        export engineVersion=$base_dir
-        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
+        export engineVersion=${{ matrix.upgrade-path.path[0] }}
+        echo "ENGINE_VERSION=$${{ matrix.upgrade-path.path[0] }}" >> $GITHUB_ENV
         export scheduleFile=upgrade/$base_dir/schedule
         mvn -B -ntp test
       shell: bash      
