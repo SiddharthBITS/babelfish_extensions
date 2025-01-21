@@ -299,7 +299,8 @@ public class TestQueryFile {
                     return;
                 }
                 try{
-                    System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " resetting");
+                    System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " RESETTING. isUpgradeTestMode : " + (isUpgradeTestMode ? "Yes" : "No") + " isntStrictlySingleRun : " + (isntStrictlySingleRun ? "Yes" : "No"));
+
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch (Exception e) {
@@ -311,7 +312,7 @@ public class TestQueryFile {
             {    
                 if (connection_bbl != null) 
                 {
-                    System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " closing");
+                    System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSING. isUpgradeTestMode : " + (isUpgradeTestMode ? "Yes" : "No") + " isntStrictlySingleRun : " + (isntStrictlySingleRun ? "Yes" : "No"));
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -322,7 +323,7 @@ public class TestQueryFile {
             return;
         try
         {
-            System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " resetting");
+            System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " RESETTING. isUpgradeTestMode : " + (isUpgradeTestMode ? "Yes" : "No") + " isntStrictlySingleRun : " + (isntStrictlySingleRun ? "Yes" : "No"));
             connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
         }
         catch (Exception e) {
