@@ -196,6 +196,7 @@ runs:
         fi
 
         export engineVersion=$base_dir
+        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
         export inputFilesPath=upgrade/$base_dir/preparation
         mvn -B -ntp test
 
@@ -217,6 +218,7 @@ runs:
           sed -i "s/\b$filename[ ]*\b$/$filename-vu-prepare/g" upgrade/$base_dir/schedule
         done
         export engineVersion=$base_dir
+        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
         export scheduleFile=upgrade/$base_dir/schedule
         mvn -B -ntp test
       shell: bash

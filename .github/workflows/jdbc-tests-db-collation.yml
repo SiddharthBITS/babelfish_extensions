@@ -96,6 +96,8 @@ jobs:
           cd test/JDBC/
           export isdbCollationMode=true
           export inputFilesPath=replication
+          echo "ENGINE_VERSION=replication" >> $GITHUB_ENV
+          export engineVersion=replication
           mvn -B -ntp test
           unset isdbCollationMode
 

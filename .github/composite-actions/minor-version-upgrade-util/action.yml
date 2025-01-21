@@ -98,6 +98,7 @@ runs:
           tar_dir="latest"
         fi
         export engineVersion=$tar_dir
+        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
         export inputFilesPath=upgrade/$tar_dir/verification_cleanup/$base_dir
         mvn -B -ntp test
         export inputFilesPath=input
@@ -105,6 +106,7 @@ runs:
           sed -i "s/\b$filename[ ]*\b$/$filename-vu-verify\\n$filename-vu-cleanup/g" upgrade/$base_dir/schedule
         done
         export engineVersion=$base_dir
+        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
         export scheduleFile=upgrade/$base_dir/schedule
         mvn -B -ntp test
       shell: bash      
