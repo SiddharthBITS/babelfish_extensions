@@ -58,15 +58,15 @@ runs:
       shell: bash
 
     - uses: actions/cache/restore@v4
-    id: restore-ccache
-    if: ${{ github.event_name == 'pull_request' }} || ${{ inputs.code_coverage == 'yes' }}
-    with:
-      path: 
-        ~/.ccache
-      key: 
-        random-random
-      restore-keys: 
-        ccache-${{ env.CRESTORE_KEY }}
+      id: restore-ccache
+      if: ${{ github.event_name == 'pull_request' }} || ${{ inputs.code_coverage == 'yes' }}
+      with:
+        path: 
+          ~/.ccache
+        key: 
+          random-random
+        restore-keys: 
+          ccache-${{ env.CRESTORE_KEY }}
 
     - name: Save cache if cache hit fails in pull requests
       if: ${{ github.event_name == 'pull_request' }}
