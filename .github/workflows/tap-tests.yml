@@ -99,6 +99,10 @@ jobs:
           extension_branch: ${{env.EXTENSION_BRANCH_OLD}}
 
       - uses: actions/checkout@v2
+      
+      - name: Save cache
+        if: always() && steps.build-extensions-old.outcome == 'success'
+        uses: ./.github/composite-actions/save-ccache
 
       - name: Build Modified Postgres using latest version
         id: build-modified-postgres-new
@@ -128,6 +132,10 @@ jobs:
         uses: ./.github/composite-actions/build-postgis-extension
         with:
           install_dir: ${{env.NEW_INSTALL_DIR}}
+      
+      - name: Save cache
+        if: always() && steps.build-postgis-extension.outcome == 'success'
+        uses: ./.github/composite-actions/save-ccache
 
       - name: Run TAP Tests
         id: tap

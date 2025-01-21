@@ -41,6 +41,10 @@ jobs:
         if: always() && steps.build-postgis-extension.outcome == 'success'
         uses: ./.github/composite-actions/install-extensions
       
+      - name: Save cache
+        if: always()
+        uses: ./github/composite-actions/save-cache
+
       - name: Run Dotnet Tests
         id: run-dotnet-tests
         if: always() && steps.install-extensions.outcome == 'success'
