@@ -10,6 +10,9 @@ password = 12345678
 # PATH TO INPUT TEST FILES FOLDER
 inputFilesPath = input
 
+# ENGINE VERSION
+engineVersion = 13_6
+
 # SPECIFY IF YOU WISH TO PRINT ALL THE SUMMARY LOGS/DIFF TO CONSOLE
 printLogsToConsole = false
 
