@@ -113,7 +113,7 @@ jobs:
         run: |
           export PATH=~/${{env.INSTALL_DIR}}/bin:$PATH
           export PG_SRC=~/work/babelfish_extensions/postgresql_modified_for_babelfish
-          export engineVersion=${{env.ENGINE_VERSION}}
+          export engineVersion="latest"
           export inputFilesPath=${{inputs.input_dir}}
           cd test
           # ignoring BABEL-2843 test file BABEL-2843,as in this file we are enabling the babelfish_statistics profile On for DDL, which is not giving any error but just adding the query under Query Text  which is being passed from pg_audit and hence getting a diff file

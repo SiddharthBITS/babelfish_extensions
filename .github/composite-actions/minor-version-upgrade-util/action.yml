@@ -98,7 +98,7 @@ runs:
           tar_dir="latest"
         fi
         export engineVersion=$tar_dir
-        echo "ENGINE_VERSION=$base_dir" >> $GITHUB_ENV
+        echo "ENGINE_VERSION=$tar_dir" >> $GITHUB_ENV
         export inputFilesPath=upgrade/$tar_dir/verification_cleanup/$base_dir
         mvn -B -ntp test
         export inputFilesPath=input

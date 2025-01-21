@@ -171,7 +171,7 @@ public class TestQueryFile {
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
 
         System.out.println("VersionCheck : Version : " + engineVersion);
-        if(engineVersion == "singledb" || engineVersion == null)
+        if(engineVersion == "singledb" || engineVersion == "replication" || engineVersion == "latest" || engineVersion == null)
         {
             majorVersion = 0;
             minorVersion = 0;
