@@ -55,9 +55,11 @@ runs:
           if [[ "$tar_dir" == *"latest"* || ${{ inputs.dump_restore }} == 'true' ]]; then
             tar_dir="latest"
           fi
+          export engineVersion=$tar_dir
           export inputFilesPath=upgrade/$tar_dir/verification_cleanup/$base_dir
         else
           base_dir="singledb"
+          export engineVersion=singledb
           export inputFilesPath=upgrade/singledb/verification_cleanup
         fi
 

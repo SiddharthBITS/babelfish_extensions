@@ -195,6 +195,7 @@ runs:
           base_dir="singledb"
         fi
 
+        export engineVersion=$base_dir
         export inputFilesPath=upgrade/$base_dir/preparation
         mvn -B -ntp test
 

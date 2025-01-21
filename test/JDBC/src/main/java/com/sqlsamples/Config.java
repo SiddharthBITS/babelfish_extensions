@@ -18,6 +18,7 @@ import static java.util.Objects.isNull;
 public class Config {
     
     static Properties properties = readConfig();
+    static String engineVersion = properties.getProperty("engineVersion");
     static String inputFilesDirectoryPath = properties.getProperty("inputFilesPath");
     static boolean printLogsToConsole = Boolean.parseBoolean(properties.getProperty("printLogsToConsole"));
     static String JDBCDriver = properties.getProperty("driver");

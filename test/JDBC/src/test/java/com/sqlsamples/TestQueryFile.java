@@ -162,56 +162,6 @@ public class TestQueryFile {
         } else throw new ClassNotFoundException("Driver not found for: " + JDBCDriver +". Choose from either 'sqlserver' or 'postgresql'");
     }
 
-    // Getting the base version of the scheduleFile
-    public static void setVersions(String path)
-    {
-        System.out.println("VersionCheck : Set Versions called.");
-        majorVersion = 0;
-        minorVersion = 0;
-        if (path == null || path.isEmpty())
-        {
-            System.out.println("VersionCheck : path == null || path.isEmpty()");
-            return;
-        }
-    
-        int lastSlash = path.lastIndexOf('/');
-        if (lastSlash == -1)
-        {
-            System.out.println("VersionCheck : lastSlash == -1");
-            return;
-        }
-    
-        int secondLastSlash = path.lastIndexOf('/', lastSlash - 1);
-        if (secondLastSlash == -1) 
-        {
-            System.out.println("VersionCheck : secondLastSlash == -1");
-            return;
-        }
-    
-        String versionString = path.substring(secondLastSlash + 1, lastSlash);
-        String[] pathSections = versionString.split("_");
-    
-        if (pathSections.length != 2) 
-        {
-            System.out.println("VersionCheck : pathSections.length != 2");
-            return;
-        }
-    
-        try 
-        {
-            int[] versions = new int[2];
-            majorVersion = Integer.parseInt(pathSections[0]);
-            minorVersion = Integer.parseInt(pathSections[1]);
-            System.out.println("VersionCheck : Normal Operations : Version set to : " + majorVersion + "_" + minorVersion);
-            return;
-        }
-        catch (NumberFormatException e) 
-        {
-            System.out.println("VersionCheck : NumberFormatException");
-            return;
-        }
-    }
-
     // test data is seeded from here
     static Stream<String> inputFileNames() {
         File dir = new File(inputFilesDirectoryPath);
@@ -220,8 +170,18 @@ public class TestQueryFile {
         File dbCollationIgnoreFile = new File(dbCollationIgnoreFileName);
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
 
-        System.out.println("VersionCheck : Schedule file path: " + scheduleFileName);
-        setVersions(scheduleFileName);
+        if(engineVersion == "singledb")
+        {
+            majorVersion = 0;
+            minorVersion = 0;
+        }
+        else
+        {
+            String[] pathSections = engineVersion.split("_");
+            majorVersion = Integer.parseInt(pathSections[0]);
+            minorVersion = Integer.parseInt(pathSections[1]);
+        }
+
         System.out.println("VersionCheck : Version set to : " + majorVersion + "_" + minorVersion);
 
         int lineCount = 1;
