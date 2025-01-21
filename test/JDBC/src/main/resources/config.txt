@@ -57,5 +57,5 @@ isUpgradeTestMode = false
 # Default SLA in milliseconds
 defaultSLA = 40000
 
-# WHETHER THE TEST SHOULD BE STRICTLY SINGLE RUN
-isStrictlySingleRun = false;
+# WHETHER THE TEST SHOULD ALLOWED TO BE RUN WITH RESET CONNECTIONS FOR VERSIONS > 16.6 OR BE STRICTLY SINGLE RUN
+isntStrictlySingleRun = true;

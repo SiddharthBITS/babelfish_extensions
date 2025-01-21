@@ -221,22 +221,16 @@ public class TestQueryFile {
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
 
         System.out.println("VersionCheck : Schedule file path: " + scheduleFileName);
-        if(scheduleFileName == "dummy_schedule")
-        {
-            System.out.println("VersionCheck : DummyTest");
-            majorVersion = 1;
-            minorVersion = 1;
-        }
-        else
-        {
-            setVersions(scheduleFileName);
-        }
+        setVersions(scheduleFileName);
         System.out.println("VersionCheck : Version set to : " + majorVersion + "_" + minorVersion);
+
+        int lineCount = 1;
 
         try (BufferedReader br = new BufferedReader(new FileReader(scheduleFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#") && line.trim().length() > 0)
+                    System.out.println("Line " + lineCount++ + ": " + line);
                     testsToRun.add(line);
             }
         } catch (IOException e) {
@@ -337,7 +331,7 @@ public class TestQueryFile {
     {
         if (isUpgradeTestMode) 
         {
-            if(!isStrictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
+            if(isntStrictlySingleRun && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
             {
                 if (connection_bbl == null) 
                 {
