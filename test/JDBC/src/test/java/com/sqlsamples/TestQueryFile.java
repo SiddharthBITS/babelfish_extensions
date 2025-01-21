@@ -321,7 +321,7 @@ public class TestQueryFile {
         }
         if (connection_bbl == null)
             return;
-        try
+        try 
         {
             System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion + " RESETTING. isUpgradeTestMode : " + (isUpgradeTestMode ? "Yes" : "No") + " isntStrictlySingleRun : " + (isntStrictlySingleRun ? "Yes" : "No"));
             connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
