@@ -265,6 +265,57 @@ public class TestQueryFile {
         String logFile = testRunDir + timestamp;
         configureLogger(logFile, logger);
 
+        String URL = properties.getProperty("URL");
+        String tsql_port = properties.getProperty("tsql_port");
+        String databaseName = properties.getProperty("databaseName");
+        String user = properties.getProperty("user");
+        String password = properties.getProperty("password");
+
+        connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
+        connection_bbl = DriverManager.getConnection(connectionString);
+
+        // Query against database to find test version
+        try
+        {
+            Statement stmt = connection_bbl.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
+
+            int columnCount = rs.getMetaData().getColumnCount();
+
+            StringBuilder queryOutputBuilder = new StringBuilder();
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) 
+                {
+                    queryOutputBuilder.append(rs.getString(i) + " ");
+                }
+            }
+            String queryOutput = queryOutputBuilder.toString();
+
+            Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
+            Matcher matcher = pattern.matcher(queryOutput);
+
+            if(matcher.find())
+            {
+                String versionString = matcher.group(1);
+                majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
+                minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
+            }
+            else
+            {
+                majorVersion = 0;
+                minorVersion = 0;
+            }
+        } 
+        catch (SQLException e)
+        {
+            majorVersion = 0;
+            minorVersion = 0;
+            System.err.println("Error executing query: " + e.getMessage());
+        }
+
+        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
+        closeConnections();
+
         summaryLogger.info("Started test suite. Now running tests...");
     }
     
@@ -281,6 +332,7 @@ public class TestQueryFile {
                 }
                 try
                 {
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET");
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch(Exception e)
@@ -293,6 +345,7 @@ public class TestQueryFile {
             {
                 if (connection_bbl != null) 
                 {
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE");
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -307,6 +360,7 @@ public class TestQueryFile {
             }
             try
             {
+                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET");
                 connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
             }
             catch (Exception e) 
@@ -471,47 +525,6 @@ public class TestQueryFile {
             if (connection_bbl == null)
                 connection_bbl = DriverManager.getConnection(connectionString);
         }
-
-        // Query against database to find test version
-        try 
-        {
-            Statement stmt = connection_bbl.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
-
-            int columnCount = rs.getMetaData().getColumnCount();
-
-            StringBuilder queryOutputBuilder = new StringBuilder();
-            while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) 
-                {
-                    queryOutputBuilder.append(rs.getString(i) + " ");
-                }
-            }
-            String queryOutput = queryOutputBuilder.toString();
-
-            Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
-            Matcher matcher = pattern.matcher(queryOutput);
-
-            if(matcher.find())
-            {
-                String versionString = matcher.group(1);
-                majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
-                minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
-            }
-            else
-            {
-                majorVersion = 0;
-                minorVersion = 0;
-            }
-        } 
-        catch (SQLException e)
-        {
-            majorVersion = 0;
-            minorVersion = 0;
-            System.err.println("Error executing query: " + e.getMessage());
-        }
-
-        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
 
         summaryLogger.info("RUNNING " + inputFileName);
 
