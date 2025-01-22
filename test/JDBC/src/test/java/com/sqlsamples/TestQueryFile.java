@@ -272,7 +272,7 @@ public class TestQueryFile {
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
         if (isUpgradeTestMode) 
         {
-            if(allowConnectionReset && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)))
+            if(allowConnectionReset && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
             {
                 if(connection_bbl == null)
                 {
@@ -475,37 +475,45 @@ public class TestQueryFile {
 
         logger.info("Running " + inputFileName + "...");
 
-        //Query against database to find test version
+        // Query against database to find test version
         
         try 
         {
             Statement stmt = connection_bbl.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
-            
-            // Get metadata about the result set
-            ResultSetMetaData metaData = rs.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            
-            // Print column headers
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.print(metaData.getColumnName(i) + "\t");
-            }
-            System.out.println();
-            
-            // Print data rows
+
+            int columnCount = rs.getMetaData().getColumnCount();
+
+            String queryOutput = "";
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) 
                 {
-                    System.out.print(rs.getString(i) + "\t");
+                    queryOutput.append(rs.getString(i).append(" "));
                 }
-                System.out.println();
             }
+
+            Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
+            Matcher matcher = pattern.matcher(input);
+
+            if (matcher.find()) 
+            {
+                majorVersion = Integer.parseInt(matcher.group(1));
+                minorVersion = Integer.parseInt(matcher.group(2));
+            } else 
+            {
+                majorVersion = 0;
+                minorVersion = 0;
+            }
+
         } 
-        catch (SQLException e) 
+        catch (SQLException e)
         {
+            majorVersion = 0;
+            minorVersion = 0;
             System.err.println("Error executing query: " + e.getMessage());
         }
 
+        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
 
         String testFilePath = filePaths.get(inputFileName);
         
