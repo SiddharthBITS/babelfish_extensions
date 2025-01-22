@@ -58,4 +58,4 @@ isUpgradeTestMode = false
 defaultSLA = 40000
 
 # WHETHER THE CONNECTION SHOULD BE ALLOWED TO RESET AFTER EACH TESTS OR CLOSED AFTER EACH TEST
-allowConnectionReset = true;
+allowConnectionReset = true
