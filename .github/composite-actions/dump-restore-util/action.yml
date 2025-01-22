@@ -328,7 +328,7 @@ runs:
       shell: bash
 
     - name: Save cache
-      if: always()
+      if: always() && steps.run-pg_dump-restore.outcome == 'success'
       uses: ./.github/composite-actions/save-cacche
 
     - name: Run Verify Tests

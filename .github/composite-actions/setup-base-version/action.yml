@@ -223,7 +223,7 @@ runs:
     - uses: actions/checkout@v2
 
     - name: Save cache
-      if: always()
+      if: always()&& steps.jdbc-upgrade-tests.outcome == 'success'
       uses: ./.github/composite-actions/save-ccache
     
     - name: Install Python
