@@ -336,7 +336,7 @@ public class TestQueryFile {
                 }
                 try
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode :" + isUpgradeTestMode ? "YES" : "NO" + " allowConnectionReset " + allowConnectionReset ? "YES" : "NO");
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode:" + (isUpgradeTestMode ? "YES" : "NO") + " allowConnectionReset " + (allowConnectionReset ? "YES" : "NO"));
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch(Exception e)
@@ -349,7 +349,7 @@ public class TestQueryFile {
             {
                 if (connection_bbl != null) 
                 {
-                    SSystem.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE isUpgradeTestMode :" + isUpgradeTestMode ? "YES" : "NO" + " allowConnectionReset " + allowConnectionReset ? "YES" : "NO");
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE isUpgradeTestMode:" + (isUpgradeTestMode ? "YES" : "NO") + " allowConnectionReset " + (allowConnectionReset ? "YES" : "NO"));
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -364,7 +364,7 @@ public class TestQueryFile {
             }
             try
             {
-                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode :" + isUpgradeTestMode ? "YES" : "NO" + " allowConnectionReset " + allowConnectionReset ? "YES" : "NO");
+                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode:" + (isUpgradeTestMode ? "YES" : "NO") + " allowConnectionReset " + (allowConnectionReset ? "YES" : "NO"));
                 connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
             }
             catch (Exception e) 
