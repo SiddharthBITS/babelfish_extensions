@@ -163,10 +163,7 @@ public class JDBCCrossDialect {
 
     void closeConnectionsUtil (HashMap<String, Connection> connectionMap, BufferedWriter bw, Logger logger) 
     {
-        System.out.println("CrossDialectCheck Version: " + majorVersion + "_" + minorVersion);
-
         boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
-
         Iterator<Map.Entry<String, Connection>> iterator = connectionMap.entrySet().iterator();
 
         while (iterator.hasNext()) {

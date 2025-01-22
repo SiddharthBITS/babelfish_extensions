@@ -307,32 +307,13 @@ public class TestQueryFile {
                 majorVersion = 0;
                 minorVersion = 0;
             }
-
-            System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
         } 
         catch (SQLException e)
         {
             majorVersion = 0;
             minorVersion = 0;
-            System.out.println("Error executing query: " + e.getMessage());
             System.err.println("Error executing query: " + e.getMessage());
         }
-        // finally
-        // {
-        //     try
-        //     {
-        //         if(getVersionCon != null) 
-        //         {
-        //             getVersionCon.close();
-        //         }
-        //         getVersionCon = null;
-        //     }
-        //     catch (SQLException e)
-        //     {
-        //         System.out.println("Error in closing: " + e.getMessage());
-        //         System.err.println("Error in closing: " + e.getMessage());
-        //     }
-        // }
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
@@ -350,7 +331,6 @@ public class TestQueryFile {
                 }
                 try
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET allowConnectionReset: " + (allowConnectionReset ? "YES" : "NO"));
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch(Exception e)
@@ -363,7 +343,6 @@ public class TestQueryFile {
             {
                 if (connection_bbl != null) 
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE allowConnectionReset: " + (allowConnectionReset ? "YES" : "NO"));
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -374,7 +353,6 @@ public class TestQueryFile {
         {
             if (connection_bbl != null) 
             {
-                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE allowConnectionReset: " + (allowConnectionReset ? "YES" : "NO"));
                 connection_bbl.close();
             }
             connection_bbl = null;
