@@ -494,7 +494,7 @@ public class TestQueryFile {
             String queryOutput = queryOutputBuilder.toString();
 
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
-            Matcher matcher = pattern.matcher(queryOutput);
+            Matcher matcher = pattern.matcher(queryOutputBuilder);
 
             if (matcher.find()) 
             {
