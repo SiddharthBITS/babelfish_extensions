@@ -476,7 +476,6 @@ public class TestQueryFile {
         logger.info("Running " + inputFileName + "...");
 
         // Query against database to find test version
-        
         try 
         {
             Statement stmt = connection_bbl.createStatement();
