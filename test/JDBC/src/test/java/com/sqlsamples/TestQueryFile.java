@@ -316,6 +316,7 @@ public class TestQueryFile {
         {
             majorVersion = 0;
             minorVersion = 0;
+            System.out.println("Error executing query: " + e.getMessage());
             System.err.println("Error executing query: " + e.getMessage());
         }
 
@@ -335,7 +336,7 @@ public class TestQueryFile {
                 }
                 try
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET");
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode :" + isUpgradeTestMode ? "YES" : "NO" + " allowConnectionReset " + allowConnectionReset ? "YES" : "NO");
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch(Exception e)
@@ -348,7 +349,7 @@ public class TestQueryFile {
             {
                 if (connection_bbl != null) 
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE");
+                    SSystem.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE isUpgradeTestMode :" + isUpgradeTestMode ? "YES" : "NO" + " allowConnectionReset " + allowConnectionReset ? "YES" : "NO");
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -363,7 +364,7 @@ public class TestQueryFile {
             }
             try
             {
-                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET");
+                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode :" + isUpgradeTestMode ? "YES" : "NO" + " allowConnectionReset " + allowConnectionReset ? "YES" : "NO");
                 connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
             }
             catch (Exception e) 
