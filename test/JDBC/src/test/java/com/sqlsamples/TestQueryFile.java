@@ -314,7 +314,11 @@ public class TestQueryFile {
         }
 
         System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
-        closeConnections();
+        if (connection_bbl != null) 
+        {
+            connection_bbl.close();
+        }
+        connection_bbl = null;
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
