@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import static com.sqlsamples.Config.*;
 import static com.sqlsamples.HandleException.handleSQLExceptionWithFile;
+import static com.sqlsamples.TestQueryFile;
 
 public class JDBCCrossDialect {
 
@@ -167,7 +168,7 @@ public class JDBCCrossDialect {
         int minorVersion = TestQueryFile.minorVersion;
 
         boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
-        
+
         Iterator<Map.Entry<String, Connection>> iterator = connectionMap.entrySet().iterator();
 
         while (iterator.hasNext()) {
