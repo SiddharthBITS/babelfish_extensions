@@ -224,7 +224,7 @@ runs:
 
     - name: Save cache
       if: always()
-      uses: ./github/composite-actions/save-cache
+      uses: ./github/composite-actions/save-ccache
     
     - name: Install Python
       id: install-python

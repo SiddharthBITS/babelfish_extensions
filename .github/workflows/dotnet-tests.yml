@@ -43,7 +43,7 @@ jobs:
       
       - name: Save cache
         if: always()
-        uses: ./github/composite-actions/save-cache
+        uses: ./github/composite-actions/save-ccache
 
       - name: Run Dotnet Tests
         id: run-dotnet-tests
