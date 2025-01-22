@@ -602,7 +602,7 @@ public class TestQueryFile {
             indexes.close();
         }
         tables.close();
-}
+        
         System.out.println("==================");
 
         String testFilePath = filePaths.get(inputFileName);
