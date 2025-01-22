@@ -526,8 +526,85 @@ public class TestQueryFile {
         System.out.println("Supports Multiple Open Results: " + metaData.supportsMultipleOpenResults());
         System.out.println("Supports Get Generated Keys: " + metaData.supportsGetGeneratedKeys());
         System.out.println("Supports Statement Pooling: " + metaData.supportsStatementPooling());
+
+        System.out.println("\nCatalogs:");
+        ResultSet catalogs = metaData.getCatalogs();
+        while (catalogs.next()) {
+            System.out.println(catalogs.getString("TABLE_CAT"));
+        }
+        catalogs.close();
+
+        // Schema information
+        System.out.println("\nSchemas:");
+        ResultSet schemas = metaData.getSchemas();
+        while (schemas.next()) {
+            System.out.println(schemas.getString("TABLE_SCHEM") + " - " + schemas.getString("TABLE_CATALOG"));
+        }
+        schemas.close();
+
+        // Table types
+        System.out.println("\nTable Types:");
+        ResultSet tableTypes = metaData.getTableTypes();
+        while (tableTypes.next()) {
+            System.out.println(tableTypes.getString("TABLE_TYPE"));
+        }
+        tableTypes.close();
+
+        // Tables
+        System.out.println("\nTables:");
+        ResultSet tables = metaData.getTables(null, null, "%", null);
+        while (tables.next()) {
+            String tableName = tables.getString("TABLE_NAME");
+            String tableType = tables.getString("TABLE_TYPE");
+            System.out.println(tableName + " (" + tableType + ")");
+
+            // Columns for each table
+            System.out.println("  Columns:");
+            ResultSet columns = metaData.getColumns(null, null, tableName, "%");
+            while (columns.next()) {
+                String columnName = columns.getString("COLUMN_NAME");
+                String dataType = columns.getString("TYPE_NAME");
+                int columnSize = columns.getInt("COLUMN_SIZE");
+                System.out.println("    " + columnName + " - " + dataType + "(" + columnSize + ")");
+            }
+            columns.close();
+
+            // Primary Keys
+            System.out.println("  Primary Keys:");
+            ResultSet primaryKeys = metaData.getPrimaryKeys(null, null, tableName);
+            while (primaryKeys.next()) {
+                String columnName = primaryKeys.getString("COLUMN_NAME");
+                short keySeq = primaryKeys.getShort("KEY_SEQ");
+                System.out.println("    " + columnName + " (Sequence: " + keySeq + ")");
+            }
+            primaryKeys.close();
+
+            // Foreign Keys
+            System.out.println("  Foreign Keys:");
+            ResultSet foreignKeys = metaData.getImportedKeys(null, null, tableName);
+            while (foreignKeys.next()) {
+                String fkColumnName = foreignKeys.getString("FKCOLUMN_NAME");
+                String pkTableName = foreignKeys.getString("PKTABLE_NAME");
+                String pkColumnName = foreignKeys.getString("PKCOLUMN_NAME");
+                System.out.println("    " + fkColumnName + " -> " + pkTableName + "(" + pkColumnName + ")");
+            }
+            foreignKeys.close();
+
+            // Indexes
+            System.out.println("  Indexes:");
+            ResultSet indexes = metaData.getIndexInfo(null, null, tableName, false, false);
+            while (indexes.next()) {
+                String indexName = indexes.getString("INDEX_NAME");
+                String columnName = indexes.getString("COLUMN_NAME");
+                boolean nonUnique = indexes.getBoolean("NON_UNIQUE");
+                System.out.println("    " + indexName + " - " + columnName + " (Non-Unique: " + nonUnique + ")");
+            }
+            indexes.close();
+        }
+        tables.close();
+}
         System.out.println("==================");
-        
+
         String testFilePath = filePaths.get(inputFileName);
         
         boolean result; // whether test passed or failed
