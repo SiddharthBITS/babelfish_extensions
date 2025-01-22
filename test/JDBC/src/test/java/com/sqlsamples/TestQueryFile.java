@@ -10,6 +10,7 @@ import java.io.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.*;
 import java.util.Date;
 import java.util.stream.Stream;
 
@@ -483,16 +484,17 @@ public class TestQueryFile {
 
             int columnCount = rs.getMetaData().getColumnCount();
 
-            String queryOutput = "";
+            StringBuilder queryOutputBuilder = new StringBuilder;
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) 
                 {
                     queryOutput.append(rs.getString(i).append(" "));
                 }
             }
+            String queryOutput = queryOutputBuilder.toString();
 
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
-            Matcher matcher = pattern.matcher(input);
+            Matcher matcher = pattern.matcher(queryOutput);
 
             if (matcher.find()) 
             {
