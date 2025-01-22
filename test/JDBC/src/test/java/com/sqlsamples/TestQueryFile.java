@@ -319,22 +319,22 @@ public class TestQueryFile {
             System.out.println("Error executing query: " + e.getMessage());
             System.err.println("Error executing query: " + e.getMessage());
         }
-        finally
-        {
-            try
-            {
-                if(getVersionCon != null) 
-                {
-                    getVersionCon.close();
-                }
-                getVersionCon = null;
-            }
-            catch (SQLException e)
-            {
-                System.out.println("Error in closing: " + e.getMessage());
-                System.err.println("Error in closing: " + e.getMessage());
-            }
-        }
+        // finally
+        // {
+        //     try
+        //     {
+        //         if(getVersionCon != null) 
+        //         {
+        //             getVersionCon.close();
+        //         }
+        //         getVersionCon = null;
+        //     }
+        //     catch (SQLException e)
+        //     {
+        //         System.out.println("Error in closing: " + e.getMessage());
+        //         System.err.println("Error in closing: " + e.getMessage());
+        //     }
+        // }
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
