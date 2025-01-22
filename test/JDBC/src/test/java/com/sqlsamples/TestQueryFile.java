@@ -271,12 +271,11 @@ public class TestQueryFile {
         String user = properties.getProperty("user");
         String password = properties.getProperty("password");
 
-        connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
-        connection_bbl = DriverManager.getConnection(connectionString);
-
         // Query against database to find test version
         try
         {
+            connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
+            connection_bbl = DriverManager.getConnection(connectionString);
             Statement stmt = connection_bbl.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
 
@@ -305,6 +304,13 @@ public class TestQueryFile {
                 majorVersion = 0;
                 minorVersion = 0;
             }
+
+            System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
+            if (connection_bbl != null) 
+            {
+                connection_bbl.close();
+            }
+            connection_bbl = null;
         } 
         catch (SQLException e)
         {
@@ -312,13 +318,6 @@ public class TestQueryFile {
             minorVersion = 0;
             System.err.println("Error executing query: " + e.getMessage());
         }
-
-        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
-        if (connection_bbl != null) 
-        {
-            connection_bbl.close();
-        }
-        connection_bbl = null;
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
