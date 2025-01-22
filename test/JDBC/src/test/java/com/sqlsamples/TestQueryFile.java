@@ -264,6 +264,8 @@ public class TestQueryFile {
 
         String logFile = testRunDir + timestamp;
         configureLogger(logFile, logger);
+    
+        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
@@ -472,10 +474,6 @@ public class TestQueryFile {
                 connection_bbl = DriverManager.getConnection(connectionString);
         }
 
-        summaryLogger.info("RUNNING " + inputFileName);
-
-        logger.info("Running " + inputFileName + "...");
-
         // Query against database to find test version
         try 
         {
@@ -506,8 +504,10 @@ public class TestQueryFile {
             minorVersion = 0;
             System.err.println("Error executing query: " + e.getMessage());
         }
+        
+        summaryLogger.info("RUNNING " + inputFileName);
 
-        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
+        logger.info("Running " + inputFileName + "...");
 
         String testFilePath = filePaths.get(inputFileName);
         
