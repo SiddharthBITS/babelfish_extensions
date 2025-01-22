@@ -281,8 +281,8 @@ public class TestQueryFile {
             connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
             getVersionCon = DriverManager.getConnection(connectionString);
 
-            Statement stmt = getVersionCon.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
+            stmt = getVersionCon.createStatement();
+            rs = stmt.executeQuery("SELECT @@VERSION;");
 
             int columnCount = rs.getMetaData().getColumnCount();
 
