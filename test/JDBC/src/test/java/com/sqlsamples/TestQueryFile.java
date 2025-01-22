@@ -38,8 +38,6 @@ public class TestQueryFile {
     static ArrayList<String> testsToRun = new ArrayList();
     static HashSet<String> testsToIgnore = new HashSet();
     static File diffFile;
-    static int majorVersion = 13;
-    static int minorVersion = 6;
     
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance

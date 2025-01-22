@@ -38,6 +38,9 @@ public class Config {
     static String dbCollationIgnoreFileName = "./db_collation_jdbc_schedule";
     static String singleDBIgnoreFileName = "./singledb_jdbc_schedule";
 
+    static int majorVersion = 13;
+    static int minorVersion = 6;
+
     static String connectionString = constructConnectionString();
 
     // read configuration from text file "config.txt" and load it as properties

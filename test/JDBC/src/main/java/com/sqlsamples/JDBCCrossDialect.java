@@ -164,9 +164,6 @@ public class JDBCCrossDialect {
 
     void closeConnectionsUtil (HashMap<String, Connection> connectionMap, BufferedWriter bw, Logger logger) 
     {
-        int majorVersion = TestQueryFile.majorVersion;
-        int minorVersion = TestQueryFile.minorVersion;
-
         System.out.println("CrossDialectCheck Version: " + majorVersion + "_" + minorVersion);
 
         boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
