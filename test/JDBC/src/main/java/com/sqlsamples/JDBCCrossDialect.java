@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 import static com.sqlsamples.Config.*;
 import static com.sqlsamples.HandleException.handleSQLExceptionWithFile;
-import com.sqlsamples.TestQueryFile;
 
 public class JDBCCrossDialect {
 
