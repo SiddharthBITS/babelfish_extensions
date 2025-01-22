@@ -329,7 +329,7 @@ runs:
 
     - name: Save cache
       if: always()
-      uses: ./github/composite-actions/save-cacche
+      uses: ./.github/composite-actions/save-cacche
 
     - name: Run Verify Tests
       if: always() && steps.run-pg_dump-restore.outcome == 'success' && inputs.is_final_ver == 'true'

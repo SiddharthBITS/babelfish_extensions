@@ -125,7 +125,7 @@ jobs:
       
       - name: Save cache
         if: always()
-        uses: ./github/composite-actions/save-ccache
+        uses: ./.github/composite-actions/save-ccache
 
       - name: Build Modified Postgres using latest version
         id: build-modified-postgres-new
@@ -172,7 +172,7 @@ jobs:
       
       - name: Save cache
         if: always()
-        uses: ./github/composite-actions/save-ccache
+        uses: ./.github/composite-actions/save-ccache
         
       - name: Setup new data directory
         id: setup-new-datadir

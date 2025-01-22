@@ -50,7 +50,7 @@ runs:
 
     - name: Save cache
       if: always()
-      uses: ./github/composite-actions/save-ccache
+      uses: ./.github/composite-actions/save-ccache
     
     # Not created and used composite action update-extensions here since, in the previous step it has 
     # checked out a branch/tag which may not have the updated update-extension composite action

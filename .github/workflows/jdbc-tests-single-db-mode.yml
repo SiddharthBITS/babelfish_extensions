@@ -104,7 +104,7 @@ jobs:
 
       - name: Save cache
         if: always()
-        uses: ./github/composite-actions/save-ccache
+        uses: ./.github/composite-actions/save-ccache
 
       # The test summary files contain paths with ':' characters, which is not allowed with the upload-artifact actions
       - name: Rename Test Summary Files
