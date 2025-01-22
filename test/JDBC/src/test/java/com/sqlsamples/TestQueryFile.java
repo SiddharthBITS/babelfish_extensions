@@ -484,7 +484,7 @@ public class TestQueryFile {
 
             int columnCount = rs.getMetaData().getColumnCount();
 
-            StringBuilder queryOutputBuilder = new StringBuilder;
+            StringBuilder queryOutputBuilder = new StringBuilder();
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) 
                 {
