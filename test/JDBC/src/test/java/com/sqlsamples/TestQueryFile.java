@@ -488,7 +488,7 @@ public class TestQueryFile {
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) 
                 {
-                    queryOutput.append(rs.getString(i).append(" "));
+                    queryOutput.append(rs.getString(i) + " ");
                 }
             }
             String queryOutput = queryOutputBuilder.toString();
