@@ -37,6 +37,8 @@ public class TestQueryFile {
     static ArrayList<String> testsToRun = new ArrayList();
     static HashSet<String> testsToIgnore = new HashSet();
     static File diffFile;
+    static int majorVersion = 13;
+    static int minorVersion = 6;
     
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
@@ -262,24 +264,57 @@ public class TestQueryFile {
         String logFile = testRunDir + timestamp;
         configureLogger(logFile, logger);
         
+        //Query against database to find test version
+        
+
         summaryLogger.info("Started test suite. Now running tests...");
     }
     
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
-        if (isUpgradeTestMode) {
-            if (connection_bbl != null) connection_bbl.close();
-            connection_bbl = null;
-            return;
+        if (isUpgradeTestMode) 
+        {
+            if(allowConnectionReset && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)))
+            {
+                if(connection_bbl == null)
+                {
+                    return;
+                }
+                try
+                {
+                    connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+                return;
+            }
+            else
+            {
+                if (connection_bbl != null) 
+                {
+                    connection_bbl.close();
+                }
+                connection_bbl = null;
+                return;
+            }
         }
-        if (connection_bbl == null)
-            return;
-        try{
-            connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        else
+        {
+            if (connection_bbl == null)
+            {
+                return;
+            }
+            try
+            {
+                connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
+            }
+            catch (Exception e) 
+            {
+                e.printStackTrace();
+            }
         }
     }
 

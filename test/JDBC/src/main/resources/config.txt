@@ -56,3 +56,6 @@ isUpgradeTestMode = false
 
 # Default SLA in milliseconds
 defaultSLA = 40000
+
+# WHETHER THE CONNECTION SHOULD BE ALLOWED TO RESET AFTER EACH TESTS OR CLOSED AFTER EACH TEST
+allowConnectionReset = true;

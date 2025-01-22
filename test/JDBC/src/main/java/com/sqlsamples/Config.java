@@ -19,6 +19,7 @@ public class Config {
     
     static Properties properties = readConfig();
     static String inputFilesDirectoryPath = properties.getProperty("inputFilesPath");
+    static boolean allowConnectionReset = properties.getProperty("allowConnectionReset");
     static boolean printLogsToConsole = Boolean.parseBoolean(properties.getProperty("printLogsToConsole"));
     static String JDBCDriver = properties.getProperty("driver");
     static boolean performanceTest = Boolean.parseBoolean(properties.getProperty("performanceTest"));
