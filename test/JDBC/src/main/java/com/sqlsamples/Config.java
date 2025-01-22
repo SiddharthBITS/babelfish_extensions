@@ -32,7 +32,6 @@ public class Config {
     static boolean checkParallelQueryExpected = false;
     static boolean checkSingleDbModeExpected = false;
     static String testFileRoot = properties.getProperty("testFileRoot");
-    static boolean isUpgradeTestMode =  Boolean.parseBoolean(properties.getProperty("isUpgradeTestMode"));
     static long defaultSLA = Long.parseLong(properties.getProperty("defaultSLA"));
     static boolean allowConnectionReset = Boolean.parseBoolean(properties.getProperty("allowConnectionReset"));
     static boolean isdbCollationMode = Boolean.parseBoolean(properties.getProperty("isdbCollationMode"));

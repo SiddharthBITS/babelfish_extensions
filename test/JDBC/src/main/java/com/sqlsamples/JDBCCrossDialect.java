@@ -161,8 +161,13 @@ public class JDBCCrossDialect {
         return psqlConnection;
     }
 
-    void closeConnectionsUtil (HashMap<String, Connection> connectionMap, BufferedWriter bw, Logger logger) {
-        boolean needSkipFirst = isUpgradeTestMode ? false : true;
+    void closeConnectionsUtil (HashMap<String, Connection> connectionMap, BufferedWriter bw, Logger logger) 
+    {
+        int majorVersion = TestQueryFile.majorVersion;
+        int minorVersion = TestQueryFile.minorVersion;
+
+        boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
+        
         Iterator<Map.Entry<String, Connection>> iterator = connectionMap.entrySet().iterator();
 
         while (iterator.hasNext()) {

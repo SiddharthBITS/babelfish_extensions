@@ -342,9 +342,9 @@ public class TestQueryFile {
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
-        if (isUpgradeTestMode) 
+        if(majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6))
         {
-            if(allowConnectionReset && (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6) || (majorVersion == 0 && minorVersion == 0)))
+            if(allowConnectionReset)
             {
                 if(connection_bbl == null)
                 {
@@ -352,7 +352,7 @@ public class TestQueryFile {
                 }
                 try
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode:" + (isUpgradeTestMode ? "YES" : "NO") + " allowConnectionReset " + (allowConnectionReset ? "YES" : "NO"));
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET allowConnectionReset: " + (allowConnectionReset ? "YES" : "NO"));
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
                 catch(Exception e)
@@ -365,7 +365,7 @@ public class TestQueryFile {
             {
                 if (connection_bbl != null) 
                 {
-                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE isUpgradeTestMode:" + (isUpgradeTestMode ? "YES" : "NO") + " allowConnectionReset " + (allowConnectionReset ? "YES" : "NO"));
+                    System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE allowConnectionReset: " + (allowConnectionReset ? "YES" : "NO"));
                     connection_bbl.close();
                 }
                 connection_bbl = null;
@@ -374,19 +374,13 @@ public class TestQueryFile {
         }
         else
         {
-            if (connection_bbl == null)
+            if (connection_bbl != null) 
             {
-                return;
+                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " CLOSE allowConnectionReset: " + (allowConnectionReset ? "YES" : "NO"));
+                connection_bbl.close();
             }
-            try
-            {
-                System.out.println("VersionCloseCheck : Version : " + majorVersion + "_" + minorVersion + " RESET isUpgradeTestMode:" + (isUpgradeTestMode ? "YES" : "NO") + " allowConnectionReset " + (allowConnectionReset ? "YES" : "NO"));
-                connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
-            }
-            catch (Exception e) 
-            {
-                e.printStackTrace();
-            }
+            connection_bbl = null;
+            return;
         }
     }
 
