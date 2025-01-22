@@ -480,7 +480,7 @@ public class TestQueryFile {
         try 
         {
             Statement stmt = connection_bbl.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT @@VERSION;")
+            ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
             
             // Get metadata about the result set
             ResultSetMetaData metaData = rs.getMetaData();
@@ -494,7 +494,8 @@ public class TestQueryFile {
             
             // Print data rows
             while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
+                for (int i = 1; i <= columnCount; i++) 
+                {
                     System.out.print(rs.getString(i) + "\t");
                 }
                 System.out.println();
