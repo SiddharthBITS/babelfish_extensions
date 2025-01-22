@@ -19,7 +19,6 @@ public class Config {
     
     static Properties properties = readConfig();
     static String inputFilesDirectoryPath = properties.getProperty("inputFilesPath");
-    static boolean allowConnectionReset = properties.getProperty("allowConnectionReset");
     static boolean printLogsToConsole = Boolean.parseBoolean(properties.getProperty("printLogsToConsole"));
     static String JDBCDriver = properties.getProperty("driver");
     static boolean performanceTest = Boolean.parseBoolean(properties.getProperty("performanceTest"));
@@ -35,6 +34,7 @@ public class Config {
     static String testFileRoot = properties.getProperty("testFileRoot");
     static boolean isUpgradeTestMode =  Boolean.parseBoolean(properties.getProperty("isUpgradeTestMode"));
     static long defaultSLA = Long.parseLong(properties.getProperty("defaultSLA"));
+    static boolean allowConnectionReset = Boolean.parseBoolean(properties.getProperty("allowConnectionReset"));
     static boolean isdbCollationMode = Boolean.parseBoolean(properties.getProperty("isdbCollationMode"));
     static String dbCollationIgnoreFileName = "./db_collation_jdbc_schedule";
     static String singleDBIgnoreFileName = "./singledb_jdbc_schedule";
