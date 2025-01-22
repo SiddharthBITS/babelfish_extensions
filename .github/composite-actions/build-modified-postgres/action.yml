@@ -24,11 +24,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout Modified PostgreSQL
+    - name: Checkout Modified PostgreSQL for Babelfish
       run: |
         cd ..
         rm -rf postgresql_modified_for_babelfish
-        
+
         if [[ $GITHUB_EVENT_NAME == "pull_request" ]]; then
           if [[ ${{inputs.engine_branch}} == "latest" ]]; then
             ENGINE_BRANCH=$GITHUB_HEAD_REF
@@ -45,6 +45,7 @@ runs:
           REPOSITORY_OWNER=$GITHUB_REPOSITORY_OWNER
         fi
         $GITHUB_WORKSPACE/.github/scripts/clone_engine_repo "$REPOSITORY_OWNER" "$ENGINE_BRANCH"
+        cd postgresql_modified_for_babelfish
         rm -rf ~/.ccache
         if [[ ${{inputs.tap_tests}} == "yes" ]]; then
           echo "CRESTORE_KEY=$(git rev-parse --short HEAD)-tapTest" >> $GITHUB_ENV
