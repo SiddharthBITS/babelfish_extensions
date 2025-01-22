@@ -43,7 +43,7 @@ public class TestQueryFile {
     
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
-    statuc Connection getVersionCon;
+    static Connection getVersionCon;
     
     public static void createTestFilesListUtil(String directory, String testToRun) {
         File dir = new File(directory);
