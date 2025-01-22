@@ -496,16 +496,9 @@ public class TestQueryFile {
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
             Matcher matcher = pattern.matcher(queryOutput);
 
-            if (matcher.find()) 
-            {
-                majorVersion = Integer.parseInt(matcher.group(1));
-                minorVersion = Integer.parseInt(matcher.group(2));
-            } else 
-            {
-                majorVersion = 0;
-                minorVersion = 0;
-            }
-
+            String versionString = Integer.parseInt(matcher.group(1));
+            majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
+            minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
         } 
         catch (SQLException e)
         {
