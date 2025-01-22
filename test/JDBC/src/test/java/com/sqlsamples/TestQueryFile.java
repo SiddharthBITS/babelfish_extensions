@@ -43,6 +43,7 @@ public class TestQueryFile {
     
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
+    statuc Connection getVersionCon;
     
     public static void createTestFilesListUtil(String directory, String testToRun) {
         File dir = new File(directory);
@@ -274,10 +275,10 @@ public class TestQueryFile {
         // Query against database to find test version
         try
         {
-            // connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
-            // connection_bbl = DriverManager.getConnection(connectionString);
-            
-            Statement stmt = connection_bbl.createStatement();
+            connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
+            getVersionCon = DriverManager.getConnection(connectionString);
+
+            Statement stmt = getVersionCon.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
 
             int columnCount = rs.getMetaData().getColumnCount();
@@ -308,11 +309,11 @@ public class TestQueryFile {
 
             System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
             
-            // if(connection_bbl != null) 
-            // {
-            //     connection_bbl.close();
-            // }
-            // connection_bbl = null;
+            if(getVersionCon != null) 
+            {
+                getVersionCon.close();
+            }
+            getVersionCon = null;
         } 
         catch (SQLException e)
         {
