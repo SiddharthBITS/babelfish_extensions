@@ -476,134 +476,35 @@ public class TestQueryFile {
         logger.info("Running " + inputFileName + "...");
 
         //Query against database to find test version
-        DatabaseMetaData metaData = connection_bbl.getMetaData();
-
-        System.out.println("Database Metadata:");
-        System.out.println("==================");
-
-        // Basic database information
-        System.out.println("Database Product Name: " + metaData.getDatabaseProductName());
-        System.out.println("Database Product Version: " + metaData.getDatabaseProductVersion());
-        System.out.println("Driver Name: " + metaData.getDriverName());
-        System.out.println("Driver Version: " + metaData.getDriverVersion());
-        System.out.println("JDBC Major Version: " + metaData.getJDBCMajorVersion());
-        System.out.println("JDBC Minor Version: " + metaData.getJDBCMinorVersion());
-
-        // Database features and limits
-        System.out.println("\nDatabase Features and Limits:");
-        System.out.println("Max Connections: " + metaData.getMaxConnections());
-        System.out.println("Max Table Name Length: " + metaData.getMaxTableNameLength());
-        System.out.println("Max Column Name Length: " + metaData.getMaxColumnNameLength());
-        System.out.println("Max Columns in Table: " + metaData.getMaxColumnsInTable());
-        System.out.println("Max Columns in Select: " + metaData.getMaxColumnsInSelect());
-
-        // SQL keywords
-        System.out.println("\nSQL Keywords:");
-        System.out.println(metaData.getSQLKeywords());
-
-        // Numeric functions
-        System.out.println("\nNumeric Functions:");
-        System.out.println(metaData.getNumericFunctions());
-
-        // String functions
-        System.out.println("\nString Functions:");
-        System.out.println(metaData.getStringFunctions());
-
-        // System functions
-        System.out.println("\nSystem Functions:");
-        System.out.println(metaData.getSystemFunctions());
-
-        // Time/Date functions
-        System.out.println("\nTime/Date Functions:");
-        System.out.println(metaData.getTimeDateFunctions());
-
-        // Supported features
-        System.out.println("\nSupported Features:");
-        System.out.println("Supports Transactions: " + metaData.supportsTransactions());
-        System.out.println("Supports Batch Updates: " + metaData.supportsBatchUpdates());
-        System.out.println("Supports Savepoints: " + metaData.supportsSavepoints());
-        System.out.println("Supports Named Parameters: " + metaData.supportsNamedParameters());
-        System.out.println("Supports Multiple Open Results: " + metaData.supportsMultipleOpenResults());
-        System.out.println("Supports Get Generated Keys: " + metaData.supportsGetGeneratedKeys());
-        System.out.println("Supports Statement Pooling: " + metaData.supportsStatementPooling());
-
-        System.out.println("\nCatalogs:");
-        ResultSet catalogs = metaData.getCatalogs();
-        while (catalogs.next()) {
-            System.out.println(catalogs.getString("TABLE_CAT"));
-        }
-        catalogs.close();
-
-        // Schema information
-        System.out.println("\nSchemas:");
-        ResultSet schemas = metaData.getSchemas();
-        while (schemas.next()) {
-            System.out.println(schemas.getString("TABLE_SCHEM") + " - " + schemas.getString("TABLE_CATALOG"));
-        }
-        schemas.close();
-
-        // Table types
-        System.out.println("\nTable Types:");
-        ResultSet tableTypes = metaData.getTableTypes();
-        while (tableTypes.next()) {
-            System.out.println(tableTypes.getString("TABLE_TYPE"));
-        }
-        tableTypes.close();
-
-        // Tables
-        System.out.println("\nTables:");
-        ResultSet tables = metaData.getTables(null, null, "%", null);
-        while (tables.next()) {
-            String tableName = tables.getString("TABLE_NAME");
-            String tableType = tables.getString("TABLE_TYPE");
-            System.out.println(tableName + " (" + tableType + ")");
-
-            // Columns for each table
-            System.out.println("  Columns:");
-            ResultSet columns = metaData.getColumns(null, null, tableName, "%");
-            while (columns.next()) {
-                String columnName = columns.getString("COLUMN_NAME");
-                String dataType = columns.getString("TYPE_NAME");
-                int columnSize = columns.getInt("COLUMN_SIZE");
-                System.out.println("    " + columnName + " - " + dataType + "(" + columnSize + ")");
-            }
-            columns.close();
-
-            // Primary Keys
-            System.out.println("  Primary Keys:");
-            ResultSet primaryKeys = metaData.getPrimaryKeys(null, null, tableName);
-            while (primaryKeys.next()) {
-                String columnName = primaryKeys.getString("COLUMN_NAME");
-                short keySeq = primaryKeys.getShort("KEY_SEQ");
-                System.out.println("    " + columnName + " (Sequence: " + keySeq + ")");
-            }
-            primaryKeys.close();
-
-            // Foreign Keys
-            System.out.println("  Foreign Keys:");
-            ResultSet foreignKeys = metaData.getImportedKeys(null, null, tableName);
-            while (foreignKeys.next()) {
-                String fkColumnName = foreignKeys.getString("FKCOLUMN_NAME");
-                String pkTableName = foreignKeys.getString("PKTABLE_NAME");
-                String pkColumnName = foreignKeys.getString("PKCOLUMN_NAME");
-                System.out.println("    " + fkColumnName + " -> " + pkTableName + "(" + pkColumnName + ")");
-            }
-            foreignKeys.close();
-
-            // Indexes
-            System.out.println("  Indexes:");
-            ResultSet indexes = metaData.getIndexInfo(null, null, tableName, false, false);
-            while (indexes.next()) {
-                String indexName = indexes.getString("INDEX_NAME");
-                String columnName = indexes.getString("COLUMN_NAME");
-                boolean nonUnique = indexes.getBoolean("NON_UNIQUE");
-                System.out.println("    " + indexName + " - " + columnName + " (Non-Unique: " + nonUnique + ")");
-            }
-            indexes.close();
-        }
-        tables.close();
         
-        System.out.println("==================");
+        try 
+        {
+            Statement stmt = connection_bbl.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT @@VERSION;")
+            
+            // Get metadata about the result set
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            
+            // Print column headers
+            for (int i = 1; i <= columnCount; i++) {
+                System.out.print(metaData.getColumnName(i) + "\t");
+            }
+            System.out.println();
+            
+            // Print data rows
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    System.out.print(rs.getString(i) + "\t");
+                }
+                System.out.println();
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.err.println("Error executing query: " + e.getMessage());
+        }
+
 
         String testFilePath = filePaths.get(inputFileName);
         
