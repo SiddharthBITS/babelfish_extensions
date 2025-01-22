@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 import static com.sqlsamples.Config.*;
 import static com.sqlsamples.HandleException.handleSQLExceptionWithFile;
-import static com.sqlsamples.TestQueryFile;
+import com.sqlsamples.TestQueryFile;
 
 public class JDBCCrossDialect {
 
@@ -166,6 +166,8 @@ public class JDBCCrossDialect {
     {
         int majorVersion = TestQueryFile.majorVersion;
         int minorVersion = TestQueryFile.minorVersion;
+
+        System.out.println("CrossDialectCheck Version: " + majorVersion + "_" + minorVersion);
 
         boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
 
