@@ -274,8 +274,9 @@ public class TestQueryFile {
         // Query against database to find test version
         try
         {
-            connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
-            connection_bbl = DriverManager.getConnection(connectionString);
+            // connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
+            // connection_bbl = DriverManager.getConnection(connectionString);
+            
             Statement stmt = connection_bbl.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT @@VERSION;");
 
@@ -306,11 +307,12 @@ public class TestQueryFile {
             }
 
             System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
-            if (connection_bbl != null) 
-            {
-                connection_bbl.close();
-            }
-            connection_bbl = null;
+            
+            // if(connection_bbl != null) 
+            // {
+            //     connection_bbl.close();
+            // }
+            // connection_bbl = null;
         } 
         catch (SQLException e)
         {
