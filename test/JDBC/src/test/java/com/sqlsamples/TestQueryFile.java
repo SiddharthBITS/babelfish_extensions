@@ -264,8 +264,6 @@ public class TestQueryFile {
 
         String logFile = testRunDir + timestamp;
         configureLogger(logFile, logger);
-    
-        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
@@ -494,9 +492,17 @@ public class TestQueryFile {
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
             Matcher matcher = pattern.matcher(queryOutput);
 
-            String versionString = Integer.parseInt(matcher.group(1));
-            majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
-            minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
+            if(matcher.find())
+            {
+                String versionString = matcher.group(1);
+                majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
+                minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
+            }
+            else
+            {
+                majorVersion = 0;
+                minorVersion = 0;
+            }
         } 
         catch (SQLException e)
         {
@@ -504,7 +510,9 @@ public class TestQueryFile {
             minorVersion = 0;
             System.err.println("Error executing query: " + e.getMessage());
         }
-        
+
+        System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
+
         summaryLogger.info("RUNNING " + inputFileName);
 
         logger.info("Running " + inputFileName + "...");
