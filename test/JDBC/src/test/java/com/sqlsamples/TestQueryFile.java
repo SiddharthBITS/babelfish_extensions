@@ -43,7 +43,6 @@ public class TestQueryFile {
     
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
-    static Connection getVersionCon;
     
     public static void createTestFilesListUtil(String directory, String testToRun) {
         File dir = new File(directory);
@@ -272,6 +271,10 @@ public class TestQueryFile {
         String user = properties.getProperty("user");
         String password = properties.getProperty("password");
 
+        Connection getVersionCon = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
         // Query against database to find test version
         try
         {
@@ -308,12 +311,6 @@ public class TestQueryFile {
             }
 
             System.out.println("VersionCheck : Version : " + majorVersion + "_" + minorVersion);
-            
-            if(getVersionCon != null) 
-            {
-                getVersionCon.close();
-            }
-            getVersionCon = null;
         } 
         catch (SQLException e)
         {
@@ -322,10 +319,26 @@ public class TestQueryFile {
             System.out.println("Error executing query: " + e.getMessage());
             System.err.println("Error executing query: " + e.getMessage());
         }
+        finally
+        {
+            try
+            {
+                if(getVersionCon != null) 
+                {
+                    getVersionCon.close();
+                }
+                getVersionCon = null;
+            }
+            catch (SQLException e)
+            {
+                System.out.println("Error in closing: " + e.getMessage());
+                System.err.println("Error in closing: " + e.getMessage());
+            }
+        }
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
-    
+
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
