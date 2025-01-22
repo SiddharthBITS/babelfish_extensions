@@ -265,7 +265,57 @@ public class TestQueryFile {
         configureLogger(logFile, logger);
         
         //Query against database to find test version
-        
+        DatabaseMetaData metaData = connection_bbl.getMetaData();
+
+        System.out.println("Database Metadata:");
+        System.out.println("==================");
+
+        // Basic database information
+        System.out.println("Database Product Name: " + metaData.getDatabaseProductName());
+        System.out.println("Database Product Version: " + metaData.getDatabaseProductVersion());
+        System.out.println("Driver Name: " + metaData.getDriverName());
+        System.out.println("Driver Version: " + metaData.getDriverVersion());
+        System.out.println("JDBC Major Version: " + metaData.getJDBCMajorVersion());
+        System.out.println("JDBC Minor Version: " + metaData.getJDBCMinorVersion());
+
+        // Database features and limits
+        System.out.println("\nDatabase Features and Limits:");
+        System.out.println("Max Connections: " + metaData.getMaxConnections());
+        System.out.println("Max Table Name Length: " + metaData.getMaxTableNameLength());
+        System.out.println("Max Column Name Length: " + metaData.getMaxColumnNameLength());
+        System.out.println("Max Columns in Table: " + metaData.getMaxColumnsInTable());
+        System.out.println("Max Columns in Select: " + metaData.getMaxColumnsInSelect());
+
+        // SQL keywords
+        System.out.println("\nSQL Keywords:");
+        System.out.println(metaData.getSQLKeywords());
+
+        // Numeric functions
+        System.out.println("\nNumeric Functions:");
+        System.out.println(metaData.getNumericFunctions());
+
+        // String functions
+        System.out.println("\nString Functions:");
+        System.out.println(metaData.getStringFunctions());
+
+        // System functions
+        System.out.println("\nSystem Functions:");
+        System.out.println(metaData.getSystemFunctions());
+
+        // Time/Date functions
+        System.out.println("\nTime/Date Functions:");
+        System.out.println(metaData.getTimeDateFunctions());
+
+        // Supported features
+        System.out.println("\nSupported Features:");
+        System.out.println("Supports Transactions: " + metaData.supportsTransactions());
+        System.out.println("Supports Batch Updates: " + metaData.supportsBatchUpdates());
+        System.out.println("Supports Savepoints: " + metaData.supportsSavepoints());
+        System.out.println("Supports Named Parameters: " + metaData.supportsNamedParameters());
+        System.out.println("Supports Multiple Open Results: " + metaData.supportsMultipleOpenResults());
+        System.out.println("Supports Get Generated Keys: " + metaData.supportsGetGeneratedKeys());
+        System.out.println("Supports Statement Pooling: " + metaData.supportsStatementPooling());
+        System.out.println("==================");
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
