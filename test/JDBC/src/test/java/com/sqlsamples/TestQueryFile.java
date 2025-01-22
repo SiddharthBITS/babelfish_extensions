@@ -488,13 +488,13 @@ public class TestQueryFile {
             while (rs.next()) {
                 for (int i = 1; i <= columnCount; i++) 
                 {
-                    queryOutput.append(rs.getString(i) + " ");
+                    queryOutputBuilder.append(rs.getString(i) + " ");
                 }
             }
             String queryOutput = queryOutputBuilder.toString();
 
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
-            Matcher matcher = pattern.matcher(queryOutputBuilder);
+            Matcher matcher = pattern.matcher(queryOutput);
 
             if (matcher.find()) 
             {
