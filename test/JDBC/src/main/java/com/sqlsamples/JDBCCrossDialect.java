@@ -164,36 +164,31 @@ public class JDBCCrossDialect {
 
     void closeConnectionsUtil (HashMap<String, Connection> connectionMap, BufferedWriter bw, Logger logger) 
     {
-        //boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
+        boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
         Iterator<Map.Entry<String, Connection>> iterator = connectionMap.entrySet().iterator();
 
         while (iterator.hasNext()) 
         {
             Map.Entry<String, Connection> entry = iterator.next();
             Connection connection = entry.getValue();
-
-            try 
+            if (!needSkipFirst) 
             {
-                connection.close();
-            } 
-            catch (SQLException e) 
-            {
-                handleSQLExceptionWithFile(e, bw, logger);
+                try 
+                {
+                    connection.close();
+                } catch (SQLException e) {
+                    handleSQLExceptionWithFile(e, bw, logger);
+                }
             }
-
-            // if (!needSkipFirst) 
-            // {
-            //     try 
-            //     {
-            //         connection.close();
-            //     } catch (SQLException e) {
-            //         handleSQLExceptionWithFile(e, bw, logger);
-            //     }
-            // }
-            // else
-            // {
-            //     needSkipFirst = false;
-            // }
+            else
+            {
+                System.out.println();
+                System.out.println("---------------------------------------------");
+                System.out.println(entry);
+                System.out.println("---------------------------------------------");
+                System.out.println();
+                needSkipFirst = false;
+            }
         }
     }
 
