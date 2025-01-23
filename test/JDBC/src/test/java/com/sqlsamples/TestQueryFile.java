@@ -39,7 +39,7 @@ public class TestQueryFile {
     static HashSet<String> testsToIgnore = new HashSet();
     static File diffFile;
     
-    int filesProcessed = 0;
+    static int filesProcessed = 0;
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
     
