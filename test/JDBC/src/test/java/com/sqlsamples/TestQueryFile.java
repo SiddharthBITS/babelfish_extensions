@@ -363,6 +363,14 @@ public class TestQueryFile {
     // write summary log after all tests have been executed
     @AfterAll
     public static void logSummary() {
+
+        //Closing connection after all tests are done
+        if (connection_bbl != null) 
+        {
+            connection_bbl.close();
+        }
+        connection_bbl = null;
+
         int passed = 0;
         int failed = 0;
         int maxlen = 0;
