@@ -307,6 +307,20 @@ public class TestQueryFile {
                 majorVersion = 0;
                 minorVersion = 0;
             }
+
+            try
+            {
+                if (getVersionCon != null) 
+                {
+                    getVersionCon.close();
+                }
+                getVersionCon = null;
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            return;
         } 
         catch (SQLException e)
         {
@@ -341,21 +355,35 @@ public class TestQueryFile {
             }
             else
             {
-                if (connection_bbl != null) 
+                try
                 {
-                    connection_bbl.close();
+                    if (connection_bbl != null) 
+                    {
+                        connection_bbl.close();
+                    }
+                    connection_bbl = null;
                 }
-                connection_bbl = null;
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
                 return;
             }
         }
         else
         {
-            if (connection_bbl != null) 
+            try
             {
-                connection_bbl.close();
+                if (connection_bbl != null) 
+                {
+                    connection_bbl.close();
+                }
+                connection_bbl = null;
             }
-            connection_bbl = null;
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
             return;
         }
     }
