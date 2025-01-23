@@ -62,7 +62,7 @@ jobs:
         uses: lhotari/action-upterm@v1
         timeout-minutes: 180
         with:
-          limit-access-to-actor: true
+          limit-access-to-actor: false
 
       - name: Setup Base Version ${{ steps.read-base-and-final-version.outputs.base-version }} and Run Preparation Tests
         id: setup-base-version
