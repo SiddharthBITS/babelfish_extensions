@@ -39,6 +39,7 @@ public class TestQueryFile {
     static HashSet<String> testsToIgnore = new HashSet();
     static File diffFile;
     
+    int filesProcessed = 0;
     String inputFileName;
     static Connection connection_bbl;  // connection object for Babel instance
     
@@ -250,6 +251,8 @@ public class TestQueryFile {
     // configure logger for summary file and setup initial directory structure
     @BeforeAll
     public static void setup() throws IOException {
+
+        filesProcessed = 0;
         String testRunDir = "Info/" + timestamp + "/";
         new File(testRunDir).mkdirs();
         
@@ -334,7 +337,10 @@ public class TestQueryFile {
 
     // close connections that are not null after every test
     @AfterEach
-    public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
+    public void closeConnections() throws SQLException, ClassNotFoundException, Throwable 
+    {   
+        System.out.println("CloseConCheck : Version : " + majorVersion + "_" + minorVersion);
+        System.out.println("CloseConCheck : Tests run : " + filesProcessed + " Files : " + fileList.size());
         if(majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6))
         {
             if(allowConnectionReset)
@@ -346,6 +352,21 @@ public class TestQueryFile {
                 try
                 {
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
+                    if(++filesProcessed >= fileList.size())
+                    {
+                        try
+                        {
+                            if (connection_bbl != null) 
+                            {
+                                connection_bbl.close();
+                            }
+                            connection_bbl = null;
+                        }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 catch(Exception e)
                 {
@@ -362,6 +383,7 @@ public class TestQueryFile {
                         connection_bbl.close();
                     }
                     connection_bbl = null;
+                    filesProcessed++;
                 }
                 catch(Exception e)
                 {
@@ -379,6 +401,7 @@ public class TestQueryFile {
                     connection_bbl.close();
                 }
                 connection_bbl = null;
+                filesProcessed++;
             }
             catch(Exception e)
             {
