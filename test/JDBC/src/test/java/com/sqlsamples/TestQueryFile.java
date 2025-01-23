@@ -365,11 +365,18 @@ public class TestQueryFile {
     public static void logSummary() {
 
         //Closing connection after all tests are done
-        if (connection_bbl != null) 
+        try
         {
-            connection_bbl.close();
+            if (connection_bbl != null) 
+            {
+                connection_bbl.close();
+            }
+            connection_bbl = null;
         }
-        connection_bbl = null;
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
         int passed = 0;
         int failed = 0;
