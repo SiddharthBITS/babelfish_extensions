@@ -164,56 +164,37 @@ public class JDBCCrossDialect {
 
     void closeConnectionsUtil (HashMap<String, Connection> connectionMap, BufferedWriter bw, Logger logger) 
     {
-        // boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
+        //boolean needSkipFirst = (majorVersion > 16) || (majorVersion == 16 && minorVersion >= 6) ? true : false;
         Iterator<Map.Entry<String, Connection>> iterator = connectionMap.entrySet().iterator();
 
-        System.out.println("closeConnectionsUtil Test");
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) 
+        {
             Map.Entry<String, Connection> entry = iterator.next();
-            try
+            Connection connection = entry.getValue();
+
+            try 
             {
-                Connection connection = entry.getValue();
-                System.out.println(entry);
-                System.out.println();
-
-                DatabaseMetaData metaData = connection.getMetaData();
-                    
-                // Basic connection information
-                System.out.println("Database Product Name: " + metaData.getDatabaseProductName());
-                System.out.println("Database Version: " + metaData.getDatabaseProductVersion());
-                System.out.println("Driver Name: " + metaData.getDriverName());
-                System.out.println("Driver Version: " + metaData.getDriverVersion());
-                System.out.println("URL: " + metaData.getURL());
-                System.out.println("Username: " + metaData.getUserName());
-                
-                // Connection state
-                System.out.println("Auto Commit: " + connection.getAutoCommit());
-                System.out.println("Read Only: " + connection.isReadOnly());
-                System.out.println("Transaction Isolation: " + connection.getTransactionIsolation());
-                System.out.println("Valid Connection: " + connection.isValid(5)); // timeout in seconds
-                
-                // Schema information
-                System.out.println("Current Schema: " + connection.getSchema());
-                System.out.println("Current Catalog: " + connection.getCatalog());
-
-                System.out.println("----------------------------------------------------------------");
-
-                // if (!needSkipFirst) {
-                //     try {
-                //         connection.close();
-                //     } catch (SQLException e) {
-                //         handleSQLExceptionWithFile(e, bw, logger);
-                //     }
-                // }
-                // else
-                //     needSkipFirst = false;
-            }
-            catch(SQLException e)
+                connection.close();
+            } 
+            catch (SQLException e) 
             {
-                System.out.println("Exception: " + e.getMessage());
+                handleSQLExceptionWithFile(e, bw, logger);
             }
+
+            // if (!needSkipFirst) 
+            // {
+            //     try 
+            //     {
+            //         connection.close();
+            //     } catch (SQLException e) {
+            //         handleSQLExceptionWithFile(e, bw, logger);
+            //     }
+            // }
+            // else
+            // {
+            //     needSkipFirst = false;
+            // }
         }
-        return;
     }
 
     void closeConnections (BufferedWriter bw, Logger logger) {
