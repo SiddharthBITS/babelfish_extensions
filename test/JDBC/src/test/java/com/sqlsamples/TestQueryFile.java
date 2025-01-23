@@ -22,37 +22,27 @@ import static com.sqlsamples.Statistics.curr_exec_time;
 import static com.sqlsamples.Statistics.sla;
 
 public class TestQueryFile {
-
+    
     static String timestamp = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss.SSS").format(new Date());
     static String generatedFilesDirectoryPath = testFileRoot + "/expected/";
     static String parallelQueryGeneratedFilesDirectoryPath = testFileRoot + "/expected/parallel_query/";
     static String sqlServerGeneratedFilesDirectoryPath = testFileRoot + "/sql_expected/";
     static String outputFilesDirectoryPath = testFileRoot + "/output/";
-    static Logger summaryLogger = LogManager.getLogger("testSummaryLogger"); // logger to write summary of tests
-                                                                             // executed
-    static Logger logger = LogManager.getLogger("eventLoggger"); // logger to log any test framework events
-    static ArrayList<AbstractMap.SimpleEntry<String, Boolean>> summaryMap = new ArrayList<>(); // map to store test
-                                                                                               // names and status
-    static ArrayList<AbstractMap.SimpleEntry<String, ArrayList<Long>>> slaMap = new ArrayList<>(); // map to store
-                                                                                                   // execution time and
-                                                                                                   // SLA
-    static ArrayList<AbstractMap.SimpleEntry<String, ArrayList<Integer>>> testCountMap = new ArrayList<>(); // map to
-                                                                                                            // store
-                                                                                                            // test
-                                                                                                            // names and
-                                                                                                            // number of
-                                                                                                            // tests
-                                                                                                            // passed
-    static ArrayList<String> fileList = new ArrayList<>();
-    static HashMap<String, String> filePaths = new HashMap<>(); // map to store fileName and their paths
+    static Logger summaryLogger = LogManager.getLogger("testSummaryLogger");    //logger to write summary of tests executed
+    static Logger logger = LogManager.getLogger("eventLoggger");                //logger to log any test framework events
+    static ArrayList<AbstractMap.SimpleEntry<String, Boolean>> summaryMap = new ArrayList<>(); //map to store test names and status
+    static ArrayList<AbstractMap.SimpleEntry<String, ArrayList<Long>>> slaMap = new ArrayList<>(); //map to store execution time and SLA
+    static ArrayList<AbstractMap.SimpleEntry<String, ArrayList<Integer>>> testCountMap = new ArrayList<>(); //map to store test names and number of tests passed
+    static ArrayList <String> fileList = new ArrayList<>();
+    static HashMap<String, String> filePaths = new HashMap<>(); //map to store fileName and their paths
     static ArrayList<String> testsToRun = new ArrayList();
     static HashSet<String> testsToIgnore = new HashSet();
     static File diffFile;
-
+    
     static int filesProcessed = 0;
     String inputFileName;
-    static Connection connection_bbl; // connection object for Babel instance
-
+    static Connection connection_bbl;  // connection object for Babel instance
+    
     public static void createTestFilesListUtil(String directory, String testToRun) {
         File dir = new File(directory);
 
@@ -81,7 +71,7 @@ public class TestQueryFile {
 
     // helper function to fetch the prefix of a prepare,
     // verify or cleanup test file name
-    public static String getFileNamePrefix(String fileName) {
+    public static String getFileNamePrefix (String fileName) {
         if (fileName.contains("-vu-prepare")) {
             return fileName.split("-vu-prepare")[0];
         } else if (fileName.contains("-vu-verify")) {
@@ -96,7 +86,7 @@ public class TestQueryFile {
     // helper function to tell us whether a file is a prepare
     // verify or a cleanup file. Numbers are allocated based on
     // what ordering we want the files to be in
-    public static int getFileOrderUtil(String fileName) {
+    public static int getFileOrderUtil (String fileName) {
         if (fileName.contains("-vu-prepare")) {
             return 0;
         } else if (fileName.contains("-vu-verify")) {
@@ -109,11 +99,12 @@ public class TestQueryFile {
     }
 
     public static void createTestFilesList(String directory) {
-        for (String testToRun : testsToRun) {
+        for(String testToRun : testsToRun) {
             /* prefix indicates it is a postgres command */
             if (testToRun.startsWith("cmd#!#")) {
                 fileList.add(testToRun);
-            } else if (testToRun.startsWith("ignore#!#")) {
+            }
+            else if (testToRun.startsWith("ignore#!#")) {
                 testsToIgnore.add(testToRun.split("#!#", -1)[1]);
             } else {
                 createTestFilesListUtil(directory, testToRun);
@@ -135,17 +126,15 @@ public class TestQueryFile {
 
         if (command[1].equalsIgnoreCase("sqlserver")) {
             /* if are trying to execute a t-sql command but we are using postgres driver */
-            if (JDBCDriver.equalsIgnoreCase("postgresql")) {
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // use sql server driver
+            if(JDBCDriver.equalsIgnoreCase("postgresql")) {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");     //use sql server driver
             }
             connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
             summaryLogger.info("Execute T-SQL Command: " + command[2]);
         } else if (command[1].equalsIgnoreCase("postgresql")) {
-            /*
-             * if are trying to execute a postgres command but we are using sqlserver driver
-             */
-            if (JDBCDriver.equalsIgnoreCase("sqlserver")) {
-                Class.forName("org.postgresql.Driver"); // use postgres driver
+            /* if are trying to execute a postgres command but we are using sqlserver driver */
+            if(JDBCDriver.equalsIgnoreCase("sqlserver")) {
+                Class.forName("org.postgresql.Driver");     //use postgres driver
             }
             connectionString = createPostgreSQLConnectionString(URL, psql_port, physicalDatabaseName, user, password);
             summaryLogger.info("Execute Postgres Command: " + command[2]);
@@ -169,9 +158,7 @@ public class TestQueryFile {
             Class.forName("org.postgresql.Driver");
         } else if (JDBCDriver.equalsIgnoreCase("sqlserver")) {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        } else
-            throw new ClassNotFoundException(
-                    "Driver not found for: " + JDBCDriver + ". Choose from either 'sqlserver' or 'postgresql'");
+        } else throw new ClassNotFoundException("Driver not found for: " + JDBCDriver +". Choose from either 'sqlserver' or 'postgresql'");
     }
 
     // test data is seeded from here
@@ -181,7 +168,7 @@ public class TestQueryFile {
         File parallelQueryTestIgnoreFile = new File(parallelQueryTestIgnoreFileName);
         File dbCollationIgnoreFile = new File(dbCollationIgnoreFileName);
         File singleDBIgnoreFile = new File(singleDBIgnoreFileName);
-
+        
         try (BufferedReader br = new BufferedReader(new FileReader(scheduleFile))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -230,32 +217,32 @@ public class TestQueryFile {
                 e.printStackTrace();
             }
         }
-
+        
         createTestFilesList(dir.getAbsolutePath());
 
         // if this is a normal JDBC test run, we need to run the prepare, verify
         // and cleanup scripts for one use-case, one after the other
         // if (!isUpgradeTestMode) {
-        // first sort all files based only on file prefix
-        Collections.sort(fileList, new Comparator<String>() {
-            @Override
-            public int compare(String file1, String file2) {
-                return getFileNamePrefix(file1).compareTo(getFileNamePrefix(file2));
-            }
-        });
-
-        // next sort in such a way that filenames that have same prefix should
-        // run prepare file first, verify file next and cleanup file at the end
-        Collections.sort(fileList, new Comparator<String>() {
-            @Override
-            public int compare(String file1, String file2) {
-                if (getFileNamePrefix(file1).equals(getFileNamePrefix(file2))) {
-                    return getFileOrderUtil(file1) - getFileOrderUtil(file2);
-                } else {
-                    return 0;
+            // first sort all files based only on file prefix
+            Collections.sort(fileList, new Comparator<String>() {
+                @Override
+                public int compare (String file1, String file2) {
+                    return getFileNamePrefix(file1).compareTo(getFileNamePrefix(file2));
                 }
-            }
-        });
+            });
+
+            // next sort in such a way that filenames that have same prefix should
+            // run prepare file first, verify file next and cleanup file at the end
+            Collections.sort(fileList, new Comparator<String>() {
+                @Override
+                public int compare (String file1, String file2) {
+                    if (getFileNamePrefix(file1).equals(getFileNamePrefix(file2))) {
+                        return getFileOrderUtil(file1) - getFileOrderUtil(file2);
+                    } else {
+                        return 0;
+                    }
+                }
+            });
         // }
 
         return fileList.stream();
@@ -268,11 +255,11 @@ public class TestQueryFile {
         filesProcessed = 0;
         String testRunDir = "Info/" + timestamp + "/";
         new File(testRunDir).mkdirs();
-
+        
         new File(outputFilesDirectoryPath).mkdirs();
         diffFile = new File(testRunDir + timestamp + ".diff");
         diffFile.createNewFile();
-
+        
         String logSummaryFile = testRunDir + timestamp + "_runSummary";
         configureSummaryLogger(logSummaryFile, summaryLogger);
 
@@ -288,9 +275,10 @@ public class TestQueryFile {
         Connection getVersionCon = null;
         Statement stmt = null;
         ResultSet rs = null;
-
+        
         // Query against database to find test version
-        try {
+        try
+        {
             connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
             getVersionCon = DriverManager.getConnection(connectionString);
 
@@ -301,7 +289,8 @@ public class TestQueryFile {
 
             StringBuilder queryOutputBuilder = new StringBuilder();
             while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
+                for (int i = 1; i <= columnCount; i++) 
+                {
                     queryOutputBuilder.append(rs.getString(i) + " ");
                 }
             }
@@ -310,25 +299,34 @@ public class TestQueryFile {
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
             Matcher matcher = pattern.matcher(queryOutput);
 
-            if (matcher.find()) {
+            if(matcher.find())
+            {
                 String versionString = matcher.group(1);
                 majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
                 minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
-            } else {
+            }
+            else
+            {
                 majorVersion = 0;
                 minorVersion = 0;
             }
 
-            try {
-                if (getVersionCon != null) {
+            try
+            {
+                if (getVersionCon != null) 
+                {
                     getVersionCon.close();
                 }
                 getVersionCon = null;
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 e.printStackTrace();
             }
             return;
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e)
+        {
             majorVersion = 0;
             minorVersion = 0;
             System.err.println("Error executing query: " + e.getMessage());
@@ -340,26 +338,35 @@ public class TestQueryFile {
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
-        if (majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)) {
-            if (allowConnectionReset) {
-                if (connection_bbl == null) {
+        if(majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)){
+            if(allowConnectionReset){
+                if(connection_bbl == null){
                     return;
-                } else {
-                    try {
+                }
+                else{
+                    try
+                    {
                         connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
-                        if (++filesProcessed >= fileList.size()) {
+                        if(++filesProcessed >= fileList.size())
+                        {
                             System.out.println("CloseConCheck : All tests done");
-                            try {
-                                if (connection_bbl != null) {
+                            try
+                            {
+                                if (connection_bbl != null) 
+                                {
                                     System.out.println("CloseConCheck : Final Connection closed");
                                     connection_bbl.close();
                                 }
                                 connection_bbl = null;
-                            } catch (Exception e) {
+                            }
+                            catch(Exception e)
+                            {
                                 e.printStackTrace();
                             }
                         }
-                    } catch (Exception e) {
+                    }
+                    catch(Exception e)
+                    {
                         e.printStackTrace();
                     }
 
@@ -367,28 +374,40 @@ public class TestQueryFile {
                     System.out.println("CloseConCheck : Tests run : " + filesProcessed + " Files : " + fileList.size());
                     return;
                 }
-            } else {
-                try {
-                    if (connection_bbl != null) {
+            }
+            else
+            {
+                try
+                {
+                    if (connection_bbl != null) 
+                    {
                         connection_bbl.close();
                     }
                     connection_bbl = null;
                     filesProcessed++;
-                } catch (Exception e) {
+                }
+                catch(Exception e)
+                {
                     e.printStackTrace();
                 }
                 System.out.println("CloseConCheck : Version : " + majorVersion + "_" + minorVersion);
                 System.out.println("CloseConCheck : Tests run : " + filesProcessed + " Files : " + fileList.size());
                 return;
             }
-        } else {
-            try {
-                if (connection_bbl != null) {
+        }
+        else
+        {
+            try
+            {
+                if (connection_bbl != null) 
+                {
                     connection_bbl.close();
                 }
                 connection_bbl = null;
                 filesProcessed++;
-            } catch (Exception e) {
+            }
+            catch(Exception e)
+            {
                 e.printStackTrace();
             }
             System.out.println("CloseConCheck : Version : " + majorVersion + "_" + minorVersion);
@@ -413,16 +432,15 @@ public class TestQueryFile {
         summaryLogger.info("###########################################################################");
 
         // get max length of test name (used for pretty print in logs)
-        for (AbstractMap.SimpleEntry<String, Boolean> set : summaryMap) {
+        for(AbstractMap.SimpleEntry<String, Boolean> set: summaryMap){
             String testMethodName = set.getKey();
             int len = testMethodName.length();
-            if (len > maxlen)
-                maxlen = len;
+            if(len > maxlen) maxlen = len;
         }
-
+        
         // for every test in map, log test name and status
         int i;
-
+        
         for (i = 0; i < summaryMap.size(); i++) {
             String testMethodName = summaryMap.get(i).getKey();
 
@@ -431,21 +449,19 @@ public class TestQueryFile {
             Long sla_val = slaMap.get(i).getValue().get(1);
             int testsPassed = 0, totalTests = 0;
 
-            if (status) {
-                // extra spaces for right side padding
-                summaryLogger.info((testMethodName + ":" + "                                                     ")
-                        .substring(0, maxlen + 2) + "Passed! (" + exec_time + "/" + sla_val + "ms OK)" + testStats);
+            if(status){
+                //extra spaces for right side padding
+                summaryLogger.info((testMethodName + ":" + "                                                     ").substring(0, maxlen+2) + "Passed! (" + exec_time + "/" + sla_val + "ms OK)" + testStats);
                 passed++;
-            } else if (exec_time <= sla_val) {
-                // extra spaces for right side padding
-                summaryLogger.info((testMethodName + ":" + "                                                     ")
-                        .substring(0, maxlen + 2) + "Failed! (" + exec_time + "/" + sla_val + "ms OK)" + testStats);
+            }
+            else if(exec_time <= sla_val){
+                //extra spaces for right side padding
+                summaryLogger.info((testMethodName + ":" + "                                                     ").substring(0, maxlen+2) + "Failed! (" + exec_time + "/" + sla_val + "ms OK)" + testStats);
                 failed++;
-            } else {
-                // extra spaces for right side padding
-                summaryLogger.info(
-                        (testMethodName + ":" + "                                                     ").substring(0,
-                                maxlen + 2) + "Failed! (" + exec_time + "/" + sla_val + "ms TIME OUT)" + testStats);
+            }
+            else{
+                //extra spaces for right side padding
+                summaryLogger.info((testMethodName + ":" + "                                                     ").substring(0, maxlen+2) + "Failed! (" + exec_time + "/" + sla_val + "ms TIME OUT)" + testStats);
                 failed++;
             }
         }
@@ -455,18 +471,18 @@ public class TestQueryFile {
         summaryLogger.info("TESTS PASSED:\t" + passed);
         summaryLogger.info("TESTS FAILED:\t" + failed);
         summaryLogger.info("###########################################################################");
-
+        
         if (performanceTest) {
             performanceSummary(exec_times);
         }
-
+        
         // print absolute path to file containing diff
-        if (failed > 0) {
+        if(failed > 0) {
             summaryLogger.info("Output diff can be found in '" + diffFile.getAbsolutePath() + "'");
         }
 
         // displays content of file holding diff to console
-        if (printLogsToConsole) {
+        if(printLogsToConsole) {
             System.out.println("############################# DIFF STARTS HERE #############################");
             try (BufferedReader br = new BufferedReader(new FileReader(diffFile))) {
                 String line;
@@ -480,14 +496,12 @@ public class TestQueryFile {
         }
     }
 
-    // generates performance report which has mean, median, mode of query execution
-    // times
+    // generates performance report which has mean, median, mode of query execution times
     static void performanceSummary(ArrayList<Long> exec_times) {
 
-        com.sqlsamples.Statistics stats = new com.sqlsamples.Statistics(
-                exec_times.stream().filter(Objects::nonNull).mapToDouble(i -> i).toArray());
+        com.sqlsamples.Statistics stats = new com.sqlsamples.Statistics(exec_times.stream().filter(Objects::nonNull).mapToDouble(i -> i).toArray());
 
-        HashMap<String, com.sqlsamples.Statistics> statisticsHashMap = new HashMap<String, com.sqlsamples.Statistics>() {
+        HashMap <String, com.sqlsamples.Statistics> statisticsHashMap = new HashMap<String, com.sqlsamples.Statistics>() {
             {
                 put(connectionString, stats);
             }
@@ -498,29 +512,25 @@ public class TestQueryFile {
         String CSVFileName = testRunDir + timestamp + "_performanceReport";
         com.sqlsamples.ExportResults.createCSVFile(CSVFileName, statisticsHashMap);
     }
-
-    private static boolean compareOutFiles(File outputFile, File expectedFile) {
+    
+    private static boolean compareOutFiles (File outputFile, File expectedFile) {
         String outputFilePath = outputFile.getAbsolutePath();
         String expectedFilePath = expectedFile.getAbsolutePath();
         ProcessBuilder diffProcessBuilder;
 
         if (expectedFilePath.contains("sql_expected")) {
-            // if expected file is generated from T-SQL, do not compare error code and error
-            // message
-            diffProcessBuilder = new ProcessBuilder("diff", "-a", "-u", "-I", "~~ERROR", "-I",
-                    "Babelfish T-SQL Batch Parsing Time", "-I", "<Babelfish-T-SQL-Batch-Parsing-Time", expectedFilePath,
-                    outputFilePath);
+            // if expected file is generated from T-SQL, do not compare error code and error message
+            diffProcessBuilder = new ProcessBuilder("diff", "-a", "-u", "-I", "~~ERROR", "-I", "Babelfish T-SQL Batch Parsing Time", "-I", "<Babelfish-T-SQL-Batch-Parsing-Time", expectedFilePath, outputFilePath);
         } else {
             // Do not compare T-SQL Batch parsing time
-            diffProcessBuilder = new ProcessBuilder("diff", "-a", "-u", "-I", "Babelfish T-SQL Batch Parsing Time",
-                    "-I", "<Babelfish-T-SQL-Batch-Parsing-Time", expectedFilePath, outputFilePath);
+            diffProcessBuilder = new ProcessBuilder("diff", "-a", "-u", "-I", "Babelfish T-SQL Batch Parsing Time", "-I", "<Babelfish-T-SQL-Batch-Parsing-Time", expectedFilePath, outputFilePath);
         }
 
         try {
             diffProcessBuilder.redirectError(ProcessBuilder.Redirect.appendTo(diffFile));
             diffProcessBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(diffFile));
             int exitCode = diffProcessBuilder.start().waitFor();
-
+            
             switch (exitCode) {
                 case 0:
                     return true;
@@ -538,18 +548,17 @@ public class TestQueryFile {
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-        }
-
+        } 
+        
         return false;
     }
 
     // parameterized test
-    @ParameterizedTest(name = "{0}")
+    @ParameterizedTest(name="{0}")
     @NullSource
     @MethodSource("inputFileNames")
     public void TestQueryBatch(String inputFileName) throws SQLException, ClassNotFoundException, Throwable {
-        if (inputFileName == null)
-            return;
+        if(inputFileName == null) return;
 
         // if it is a command and not a fileName
         if (inputFileName.startsWith("cmd#!#")) {
@@ -569,20 +578,17 @@ public class TestQueryFile {
         logger.info("Running " + inputFileName + "...");
 
         String testFilePath = filePaths.get(inputFileName);
-
+        
         boolean result; // whether test passed or failed
         boolean timeout;
         int failed;
         String outputFileName;
 
-        if (inputFilesDirectoryPath.substring(inputFilesDirectoryPath.length() - 1) == "/") {
-            outputFileName = inputFilesDirectoryPath.split("/", 2).length > 1
-                    ? inputFilesDirectoryPath.split("/", 2)[1].replace("/", "__") + inputFileName
-                    : inputFileName;
-        } else {
-            outputFileName = inputFilesDirectoryPath.split("/", 2).length > 1
-                    ? inputFilesDirectoryPath.split("/", 2)[1].replace("/", "__") + "__" + inputFileName
-                    : inputFileName;
+        if(inputFilesDirectoryPath.substring(inputFilesDirectoryPath.length() - 1) == "/"){
+            outputFileName = inputFilesDirectoryPath.split("/",2).length > 1 ? inputFilesDirectoryPath.split("/",2)[1].replace("/","__") + inputFileName : inputFileName;
+        }
+        else{
+            outputFileName = inputFilesDirectoryPath.split("/",2).length > 1 ? inputFilesDirectoryPath.split("/",2)[1].replace("/","__") + "__" + inputFileName : inputFileName;
         }
 
         File outputFile = new File(outputFilesDirectoryPath + outputFileName + ".out");
@@ -595,63 +601,53 @@ public class TestQueryFile {
         checkSingleDbModeExpected = false;
         if (inputFileName.equals("temp_table_jdbc")) {
             JDBCTempTable.runTest(bw, logger);
-            sla = defaultSLA * 1000000L * 2; /* Increase SLA to avoid flakiness */
+            sla = defaultSLA*1000000L * 2; /* Increase SLA to avoid flakiness */
         } else {
             batch_run.batch_run_sql(connection_bbl, bw, testFilePath, logger);
         }
         bw.close();
-        if (sla == 0) {
-            sla = defaultSLA * 1000000L;
+        if(sla == 0){
+            sla = defaultSLA*1000000L;
         }
         File expectedFile;
         File nonDefaultServerCollationExpectedFile;
         File dbCollationExpectedFile;
 
-        if (isParallelQueryMode && checkParallelQueryExpected) {
+        if (isParallelQueryMode && checkParallelQueryExpected){
             expectedFile = new File(parallelQueryGeneratedFilesDirectoryPath + outputFileName + ".out");
-            nonDefaultServerCollationExpectedFile = new File(parallelQueryGeneratedFilesDirectoryPath
-                    + "non_default_server_collation/" + serverCollationName + "/" + outputFileName + ".out");
-            dbCollationExpectedFile = new File(
-                    parallelQueryGeneratedFilesDirectoryPath + "db_collation/" + outputFileName + ".out");
-        } else if (isSingleDbMode && checkSingleDbModeExpected) {
+            nonDefaultServerCollationExpectedFile = new File(parallelQueryGeneratedFilesDirectoryPath + "non_default_server_collation/" + serverCollationName + "/" + outputFileName + ".out");
+            dbCollationExpectedFile = new File(parallelQueryGeneratedFilesDirectoryPath + "db_collation/" + outputFileName + ".out");
+        }
+        else if (isSingleDbMode && checkSingleDbModeExpected){
             expectedFile = new File(generatedFilesDirectoryPath + "single_db/" + outputFileName + ".out");
-            nonDefaultServerCollationExpectedFile = new File(generatedFilesDirectoryPath + "single_db/"
-                    + "non_default_server_collation/" + serverCollationName + "/" + outputFileName + ".out");
-            dbCollationExpectedFile = new File(
-                    generatedFilesDirectoryPath + "single_db/" + "db_collation/" + outputFileName + ".out");
-        } else {
+            nonDefaultServerCollationExpectedFile = new File(generatedFilesDirectoryPath + "single_db/" + "non_default_server_collation/" + serverCollationName + "/" + outputFileName + ".out");
+            dbCollationExpectedFile = new File(generatedFilesDirectoryPath + "single_db/" + "db_collation/" + outputFileName + ".out");
+        }
+        else{
             expectedFile = new File(generatedFilesDirectoryPath + outputFileName + ".out");
-            nonDefaultServerCollationExpectedFile = new File(generatedFilesDirectoryPath
-                    + "non_default_server_collation/" + serverCollationName + "/" + outputFileName + ".out");
+            nonDefaultServerCollationExpectedFile = new File(generatedFilesDirectoryPath + "non_default_server_collation/" + serverCollationName + "/" + outputFileName + ".out");
             dbCollationExpectedFile = new File(generatedFilesDirectoryPath + "db_collation/" + outputFileName + ".out");
         }
 
+
         File sqlExpectedFile = new File(sqlServerGeneratedFilesDirectoryPath + outputFileName + ".out");
 
-        if (curr_exec_time <= sla) {
+        if(curr_exec_time <= sla){
             timeout = false;
-        } else {
+        }
+        else{
             timeout = true;
         }
 
-        if (serverCollationName != "default" && nonDefaultServerCollationExpectedFile.exists()) { /*
-                                                                                                   * If server collation
-                                                                                                   * name is non-default
-                                                                                                   * then use it's
-                                                                                                   * corresponding
-                                                                                                   * expected file if
-                                                                                                   * exists
-                                                                                                   */
+        if (serverCollationName != "default" && nonDefaultServerCollationExpectedFile.exists()){    /* If server collation name is non-default then use it's corresponding expected file if exists */
             // get the diff
             result = compareOutFiles(outputFile, nonDefaultServerCollationExpectedFile);
-        } else if (isdbCollationMode && dbCollationExpectedFile.exists()) { /*
-                                                                             * If database collation name is non-default
-                                                                             * then use it's corresponding expected file
-                                                                             * if exists
-                                                                             */
+        }
+        else if (isdbCollationMode && dbCollationExpectedFile.exists()){    /* If database collation name is non-default then use it's corresponding expected file if exists */
             // get the diff
             result = compareOutFiles(outputFile, dbCollationExpectedFile);
-        } else if (expectedFile.exists()) {
+        }
+        else if (expectedFile.exists()) {
             // get the diff
             result = compareOutFiles(outputFile, expectedFile);
         } else if (sqlExpectedFile.exists()) {
@@ -662,29 +658,27 @@ public class TestQueryFile {
         }
 
         ArrayList<Long> tempSla = new ArrayList<>();
-        tempSla.add(curr_exec_time / 1000000L);
-        tempSla.add(sla / 1000000L);
-        summaryMap.add(new AbstractMap.SimpleEntry<>(inputFileName, result && !timeout)); // add test name and result to
-                                                                                          // map
-        slaMap.add(new AbstractMap.SimpleEntry<>(inputFileName, tempSla)); // add execution time and SLA
+        tempSla.add(curr_exec_time/1000000L);
+        tempSla.add(sla/1000000L);
+        summaryMap.add(new AbstractMap.SimpleEntry<>(inputFileName, result && !timeout)); //add test name and result to map
+        slaMap.add(new AbstractMap.SimpleEntry<>(inputFileName, tempSla)); //add execution time and SLA
         sla = 0L;
 
         try {
             Assertions.assertTrue(result && !timeout);
         } catch (AssertionError e) {
-            if (timeout && result) {
+            if(timeout && result){
                 Throwable throwable = new Throwable(inputFileName + " FAILED! Execution timed out!!");
                 throwable.setStackTrace(new StackTraceElement[0]);
                 throw throwable;
-            } else if (timeout && !result) {
-                Throwable throwable = new Throwable(
-                        inputFileName + " FAILED! Execution timed out! Output diff can be found in '"
-                                + diffFile.getAbsolutePath() + "'");
+            }
+            else if(timeout && !result){
+                Throwable throwable = new Throwable(inputFileName + " FAILED! Execution timed out! Output diff can be found in '" + diffFile.getAbsolutePath() + "'");
                 throwable.setStackTrace(new StackTraceElement[0]);
                 throw throwable;
-            } else {
-                Throwable throwable = new Throwable(
-                        inputFileName + " FAILED! Output diff can be found in '" + diffFile.getAbsolutePath() + "'");
+            }
+            else{
+                Throwable throwable = new Throwable(inputFileName + " FAILED! Output diff can be found in '" + diffFile.getAbsolutePath() + "'");
                 throwable.setStackTrace(new StackTraceElement[0]);
                 throw throwable;
             }

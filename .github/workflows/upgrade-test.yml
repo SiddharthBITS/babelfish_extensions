@@ -57,6 +57,13 @@ jobs:
           )" >> $GITHUB_OUTPUT &&
           echo "base-dir=$(echo psql$(awk -F. '{print $1}' <<< ${{ steps.read-base-and-final-version.outputs.base-version }}))" >> $GITHUB_OUTPUT
 
+      - name: Setup upterm session
+        if: always() && steps.find-branch.outcome == 'success'
+        uses: lhotari/action-upterm@v1
+        timeout-minutes: 180
+        with:
+          limit-access-to-actor: true
+
       - name: Setup Base Version ${{ steps.read-base-and-final-version.outputs.base-version }} and Run Preparation Tests
         id: setup-base-version
         if: always() && steps.find-branch.outcome == 'success'
