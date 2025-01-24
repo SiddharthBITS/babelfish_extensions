@@ -181,6 +181,9 @@ go
 EXEC babel_3592_proc_mixed_statements
 GO
 
+select set_config('babelfishpg_tsql.enable_pg_hint', 'on', false);
+go
+
 -- clean up
 set babelfish_showplan_all off
 go
