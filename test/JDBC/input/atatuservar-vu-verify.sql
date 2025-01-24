@@ -1,6 +1,10 @@
 -- simple variables in T-SQL batch
 set quoted_identifier off
 go
+SELECT set_config('babelfishpg_tsql.enable_pg_hint', 'off', false)
+go
+SET pg_hint_plan.debug_print TO off;
+go
 declare @@v int = 2 select @@v
 go
 declare @#v int = 2 select @#v
