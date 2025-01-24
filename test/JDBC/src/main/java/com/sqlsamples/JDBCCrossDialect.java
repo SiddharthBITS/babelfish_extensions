@@ -218,7 +218,6 @@ public class JDBCCrossDialect {
         }
     }
 
-
     void terminatePsqlConnection (String strLine, BufferedWriter bw, Logger logger) {
         getConnectionAttributes(strLine);
 

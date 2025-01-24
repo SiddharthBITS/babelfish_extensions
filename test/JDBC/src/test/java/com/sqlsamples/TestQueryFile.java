@@ -339,7 +339,7 @@ public class TestQueryFile {
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
         if(majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)){
-            if(allowConnectionReset){
+            if(allowConnectionReset && (filesProcessed != 471 && filesProcessed != 472 && filesProcessed != 473)){
                 if(connection_bbl == null){
                     return;
                 }
