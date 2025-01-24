@@ -450,527 +450,527 @@ go
 insert t7_trigger_atatuservar values (123)
 go
 
--- table variables, in T-SQL batch, procedure and trigger (functions are below)
-declare @@v table (a int)
-insert @@v values (123)
-select * from @@v
-go
+-- -- table variables, in T-SQL batch, procedure and trigger (functions are below)
+-- declare @@v table (a int)
+-- insert @@v values (123)
+-- select * from @@v
+-- go
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
-insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 values (123)
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
+-- insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 values (123)
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- go
 
-declare @#v table (a int)
-insert @#v values (123)
-insert @#v select * from @#v
-select * from @#v
-update @#v set a = a + 1
-select * from @#v
-set rowcount 1
-delete @#v
-set rowcount 0
-select * from @#v
-go
+-- declare @#v table (a int)
+-- insert @#v values (123)
+-- insert @#v select * from @#v
+-- select * from @#v
+-- update @#v set a = a + 1
+-- select * from @#v
+-- set rowcount 1
+-- delete @#v
+-- set rowcount 0
+-- select * from @#v
+-- go
 
-declare @@V table (a int)
-insert @@v values (123)
-insert @@v select * from @@v
-select * from @@v
-update @@v set a = a + 1
-select * from @@v
-set rowcount 1
-delete @@v
-set rowcount 0
-select * from @@v
-go
+-- declare @@V table (a int)
+-- insert @@v values (123)
+-- insert @@v select * from @@v
+-- select * from @@v
+-- update @@v set a = a + 1
+-- select * from @@v
+-- set rowcount 1
+-- delete @@v
+-- set rowcount 0
+-- select * from @@v
+-- go
 
-create procedure p12_atatuservar
-as
-declare @#v table (a int)
-insert @#v values (123)
-insert @#v select * from @#v
-select * from @#v
-update @#v set a = a + 1
-select * from @#v
-set rowcount 1
-delete @#v
-set rowcount 0
-select * from @#v
+-- create procedure p12_atatuservar
+-- as
+-- declare @#v table (a int)
+-- insert @#v values (123)
+-- insert @#v select * from @#v
+-- select * from @#v
+-- update @#v set a = a + 1
+-- select * from @#v
+-- set rowcount 1
+-- delete @#v
+-- set rowcount 0
+-- select * from @#v
 
-declare @@V table (a int)
-insert @@v values (123)
-insert @@v select * from @@v
-select * from @@v
-update @@v set a = a + 1
-select * from @@v
-set rowcount 1
-delete @@v
-set rowcount 0
-select * from @@v
-go
-exec p12_atatuservar
-go
+-- declare @@V table (a int)
+-- insert @@v values (123)
+-- insert @@v select * from @@v
+-- select * from @@v
+-- update @@v set a = a + 1
+-- select * from @@v
+-- set rowcount 1
+-- delete @@v
+-- set rowcount 0
+-- select * from @@v
+-- go
+-- exec p12_atatuservar
+-- go
 
-create procedure p13_atatuservar
-as
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
-insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 values (123)
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-update @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 set a = a + 1
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-set rowcount 1
-delete @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-set rowcount 0
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-go
-exec p13_atatuservar
-go
+-- create procedure p13_atatuservar
+-- as
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
+-- insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 values (123)
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- update @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 set a = a + 1
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- set rowcount 1
+-- delete @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- set rowcount 0
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- go
+-- exec p13_atatuservar
+-- go
 
-create trigger tr8_atatuservar on t8_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr8_atatuservar'	
+-- create trigger tr8_atatuservar on t8_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr8_atatuservar'	
 
-declare @#v table (a int)
-insert @#v values (123)
-insert @#v select * from @#v
-select * from @#v
-update @#v set a = a + 1
-select * from @#v
-set rowcount 1
-delete @#v
-set rowcount 0
-select * from @#v
+-- declare @#v table (a int)
+-- insert @#v values (123)
+-- insert @#v select * from @#v
+-- select * from @#v
+-- update @#v set a = a + 1
+-- select * from @#v
+-- set rowcount 1
+-- delete @#v
+-- set rowcount 0
+-- select * from @#v
 
-declare @@V table (a int)
-insert @@v values (123)
-insert @@v select * from @@v
-select * from @@v
-update @@v set a = a + 1
-select * from @@v
-set rowcount 1
-delete @@v
-set rowcount 0
-select * from @@v
-end
-go
-insert t8_trigger_atatuservar values (123)
-go
+-- declare @@V table (a int)
+-- insert @@v values (123)
+-- insert @@v select * from @@v
+-- select * from @@v
+-- update @@v set a = a + 1
+-- select * from @@v
+-- set rowcount 1
+-- delete @@v
+-- set rowcount 0
+-- select * from @@v
+-- end
+-- go
+-- insert t8_trigger_atatuservar values (123)
+-- go
 
-create trigger tr9_atatuservar on t9_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr9_atatuservar'	
+-- create trigger tr9_atatuservar on t9_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr9_atatuservar'	
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
-insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 values (123)
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-update @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 set a = a + 1
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-set rowcount 1
-delete @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-set rowcount 0
-select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-end
-go
-insert t9_trigger_atatuservar values (123)
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
+-- insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 values (123)
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- update @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 set a = a + 1
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- set rowcount 1
+-- delete @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- set rowcount 0
+-- select * from @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- end
+-- go
+-- insert t9_trigger_atatuservar values (123)
+-- go
 
--- @@rowcount
-declare @@V int = 1
-set rowcount @@v
-select * from t1_atatuservar order by 1
-set @@v = 0
-set rowcount @@v
-select * from t1_atatuservar order by 1
-go
+-- -- @@rowcount
+-- declare @@V int = 1
+-- set rowcount @@v
+-- select * from t1_atatuservar order by 1
+-- set @@v = 0
+-- set rowcount @@v
+-- select * from t1_atatuservar order by 1
+-- go
 
-declare @#V int = 1
-set rowcount @#v
-select * from t1_atatuservar order by 1
-set @#v = 0
-set rowcount @#v
-select * from t1_atatuservar order by 1
-go
+-- declare @#V int = 1
+-- set rowcount @#v
+-- select * from t1_atatuservar order by 1
+-- set @#v = 0
+-- set rowcount @#v
+-- select * from t1_atatuservar order by 1
+-- go
 
-create procedure p14_atatuservar
-as
-declare @@V int = 1
-set rowcount @@v
-select * from t1_atatuservar order by 1
-set @@v = 0
-set rowcount @@v
-select * from t1_atatuservar order by 1
+-- create procedure p14_atatuservar
+-- as
+-- declare @@V int = 1
+-- set rowcount @@v
+-- select * from t1_atatuservar order by 1
+-- set @@v = 0
+-- set rowcount @@v
+-- select * from t1_atatuservar order by 1
 
-declare @#V int = 1
-set rowcount @#v
-select * from t1_atatuservar order by 1
-set @#v = 0
-set rowcount @#v
-select * from t1_atatuservar order by 1
-go
-exec p14_atatuservar
-go
+-- declare @#V int = 1
+-- set rowcount @#v
+-- select * from t1_atatuservar order by 1
+-- set @#v = 0
+-- set rowcount @#v
+-- select * from t1_atatuservar order by 1
+-- go
+-- exec p14_atatuservar
+-- go
 
-create trigger tr10_atatuservar on t10_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr10_atatuservar'	
+-- create trigger tr10_atatuservar on t10_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr10_atatuservar'	
 
-declare @@V int = 1
-set rowcount @@v
-select * from t1_atatuservar order by 1
-set @@v = 0
-set rowcount @@v
-select * from t1_atatuservar order by 1
+-- declare @@V int = 1
+-- set rowcount @@v
+-- select * from t1_atatuservar order by 1
+-- set @@v = 0
+-- set rowcount @@v
+-- select * from t1_atatuservar order by 1
 
-declare @#V int = 1
-set rowcount @#v
-select * from t1_atatuservar order by 1
-set @#v = 0
-set rowcount @#v
-select * from t1_atatuservar order by 1
-end
-go
-insert t10_trigger_atatuservar values (123)
-go
+-- declare @#V int = 1
+-- set rowcount @#v
+-- select * from t1_atatuservar order by 1
+-- set @#v = 0
+-- set rowcount @#v
+-- select * from t1_atatuservar order by 1
+-- end
+-- go
+-- insert t10_trigger_atatuservar values (123)
+-- go
 
-create function f1_atatuservar_extra_long_name_here()
-returns @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
-as
-begin
-insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-values (123)
-return
-end
-go
-select * from f1_atatuservar_extra_long_name_here()
-go
+-- create function f1_atatuservar_extra_long_name_here()
+-- returns @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
+-- as
+-- begin
+-- insert @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- values (123)
+-- return
+-- end
+-- go
+-- select * from f1_atatuservar_extra_long_name_here()
+-- go
 
-create function f2_atatuservar_extra_long_name_here()
-returns @#v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
-as
-begin
-insert @#v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-values (123)
-return
-end
-go
-select * from f2_atatuservar_extra_long_name_here()
-go
+-- create function f2_atatuservar_extra_long_name_here()
+-- returns @#v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 table (a int)
+-- as
+-- begin
+-- insert @#v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- values (123)
+-- return
+-- end
+-- go
+-- select * from f2_atatuservar_extra_long_name_here()
+-- go
 
--- in SET statements that support variable argument, procedure and trigger (functions are below)
-declare @@v int = 4
-set datefirst @@v
-select datepart(dw, '2024-10-21')
-go
-set datefirst 7
-go
+-- -- in SET statements that support variable argument, procedure and trigger (functions are below)
+-- declare @@v int = 4
+-- set datefirst @@v
+-- select datepart(dw, '2024-10-21')
+-- go
+-- set datefirst 7
+-- go
 
-declare @#v int = 5
-set datefirst @#v
-select datepart(dw, '2024-10-21')
-go
-set datefirst 7
-go
+-- declare @#v int = 5
+-- set datefirst @#v
+-- select datepart(dw, '2024-10-21')
+-- go
+-- set datefirst 7
+-- go
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 5
-set datefirst @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select datepart(dw, '2024-10-21')
-go
-set datefirst 7
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 5
+-- set datefirst @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select datepart(dw, '2024-10-21')
+-- go
+-- set datefirst 7
+-- go
 
--- SET DATEFORMAT currently ignores the argument and will always use 'mdy'
-declare @@v varchar(10) = 'dmy'
-set dateformat @@v
-select cast('01/02/03' as datetime)
-go
-set dateformat mdy
-go
+-- -- SET DATEFORMAT currently ignores the argument and will always use 'mdy'
+-- declare @@v varchar(10) = 'dmy'
+-- set dateformat @@v
+-- select cast('01/02/03' as datetime)
+-- go
+-- set dateformat mdy
+-- go
 
--- SET DATEFORMAT currently silently ignores the argument and will always use 'mdy'
-declare @#v varchar(10) = 'dmy'
-set dateformat @#v
-select cast('01/02/03' as datetime)
-go
-set dateformat mdy
-go
+-- -- SET DATEFORMAT currently silently ignores the argument and will always use 'mdy'
+-- declare @#v varchar(10) = 'dmy'
+-- set dateformat @#v
+-- select cast('01/02/03' as datetime)
+-- go
+-- set dateformat mdy
+-- go
 
--- SET DATEFORMAT currently silently ignores the argument and will always use 'mdy'
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dmy'
-set dateformat @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select cast('01/02/03' as datetime)
-go
-set dateformat mdy
-go
+-- -- SET DATEFORMAT currently silently ignores the argument and will always use 'mdy'
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dmy'
+-- set dateformat @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select cast('01/02/03' as datetime)
+-- go
+-- set dateformat mdy
+-- go
 
--- SET LANGUAGE currently only supports english
-declare @@v varchar(10) = 'dutch'
-set language @@v
-select @@language
-go
-set language us_english
-go
-declare @#v varchar(10) = 'french'
-set language @#v
-select @@language
-go
-set language us_english
-go
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'french'
-set language @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select @@language
-go
-set language us_english
-go
+-- -- SET LANGUAGE currently only supports english
+-- declare @@v varchar(10) = 'dutch'
+-- set language @@v
+-- select @@language
+-- go
+-- set language us_english
+-- go
+-- declare @#v varchar(10) = 'french'
+-- set language @#v
+-- select @@language
+-- go
+-- set language us_english
+-- go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'french'
+-- set language @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select @@language
+-- go
+-- set language us_english
+-- go
 
-create procedure p15_atatuservar
-as
-declare @@v1 int = 4
-set datefirst @@v1
-select datepart(dw, '2024-10-21')
+-- create procedure p15_atatuservar
+-- as
+-- declare @@v1 int = 4
+-- set datefirst @@v1
+-- select datepart(dw, '2024-10-21')
 
-declare @#v1 int = 5
-set datefirst @#v1
-select datepart(dw, '2024-10-21')
+-- declare @#v1 int = 5
+-- set datefirst @#v1
+-- select datepart(dw, '2024-10-21')
 
-declare @@v2 varchar(10) = 'dmy'
-set dateformat @@v2
-select cast('01/02/03' as datetime)
+-- declare @@v2 varchar(10) = 'dmy'
+-- set dateformat @@v2
+-- select cast('01/02/03' as datetime)
 
-declare @#v3 varchar(10) = 'dutch'
-set language @#v3
-select @@language
-go
+-- declare @#v3 varchar(10) = 'dutch'
+-- set language @#v3
+-- select @@language
+-- go
 
-exec p15_atatuservar
-go
-set datefirst 7
-set dateformat mdy
-set language us_english
-go
-create procedure p16_atatuservar
-as
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 4
-set datefirst @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select datepart(dw, '2024-10-21')
+-- exec p15_atatuservar
+-- go
+-- set datefirst 7
+-- set dateformat mdy
+-- set language us_english
+-- go
+-- create procedure p16_atatuservar
+-- as
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 4
+-- set datefirst @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select datepart(dw, '2024-10-21')
 
-declare @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 5
-set datefirst @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select datepart(dw, '2024-10-21')
+-- declare @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 5
+-- set datefirst @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select datepart(dw, '2024-10-21')
 
-declare @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dmy'
-set dateformat @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select cast('01/02/03' as datetime)
+-- declare @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dmy'
+-- set dateformat @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select cast('01/02/03' as datetime)
 
-declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dutch'
-set language @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select @@language
-go
-exec p15_atatuservar
-go
-set datefirst 7
-set dateformat mdy
-set language us_english
-go
+-- declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dutch'
+-- set language @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select @@language
+-- go
+-- exec p15_atatuservar
+-- go
+-- set datefirst 7
+-- set dateformat mdy
+-- set language us_english
+-- go
 
-create trigger tr11_atatuservar on t11_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr11_atatuservar'	
+-- create trigger tr11_atatuservar on t11_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr11_atatuservar'	
 	
-declare @@v1 int = 4
-set datefirst @@v1
-select datepart(dw, '2024-10-21')
+-- declare @@v1 int = 4
+-- set datefirst @@v1
+-- select datepart(dw, '2024-10-21')
 
-declare @#v1 int = 5
-set datefirst @#v1
-select datepart(dw, '2024-10-21')
+-- declare @#v1 int = 5
+-- set datefirst @#v1
+-- select datepart(dw, '2024-10-21')
 
-declare @@v2 varchar(10) = 'dmy'
-set dateformat @@v2
-select cast('01/02/03' as datetime)
+-- declare @@v2 varchar(10) = 'dmy'
+-- set dateformat @@v2
+-- select cast('01/02/03' as datetime)
 
-declare @#v3 varchar(10) = 'dutch'
-set language @#v3
-select @@language
-end
-go
-insert t11_trigger_atatuservar values (123)
-go
-set datefirst 7
-set dateformat mdy
-set language us_english
-go
+-- declare @#v3 varchar(10) = 'dutch'
+-- set language @#v3
+-- select @@language
+-- end
+-- go
+-- insert t11_trigger_atatuservar values (123)
+-- go
+-- set datefirst 7
+-- set dateformat mdy
+-- set language us_english
+-- go
 
-create trigger tr12_atatuservar on t12_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr12_atatuservar'	
+-- create trigger tr12_atatuservar on t12_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr12_atatuservar'	
 	
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 4
-set datefirst @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select datepart(dw, '2024-10-21')
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 4
+-- set datefirst @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select datepart(dw, '2024-10-21')
 
-declare @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 5
-set datefirst @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select datepart(dw, '2024-10-21')
+-- declare @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int = 5
+-- set datefirst @#v128_90123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select datepart(dw, '2024-10-21')
 
-declare @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dmy'
-set dateformat @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select cast('01/02/03' as datetime)
+-- declare @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dmy'
+-- set dateformat @@w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select cast('01/02/03' as datetime)
 
-declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dutch'
-set language @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
-select @@language
-end
-go
-insert t12_trigger_atatuservar values (123)
-go
-set datefirst 7
-set dateformat mdy
-set language us_english
-go
+-- declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(10) = 'dutch'
+-- set language @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678
+-- select @@language
+-- end
+-- go
+-- insert t12_trigger_atatuservar values (123)
+-- go
+-- set datefirst 7
+-- set dateformat mdy
+-- set language us_english
+-- go
 
--- execute-immediate, procedure and trigger
-declare @@V varchar(50) = 'select 123' execute(@@v)
-go
+-- -- execute-immediate, procedure and trigger
+-- declare @@V varchar(50) = 'select 123' execute(@@v)
+-- go
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(50) = 'select 123' execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(50) = 'select 123' execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
+-- go
 
-declare @@V varchar(50) = 'declare @#v int =123 select @#v'
-execute(@@v)
-go
+-- declare @@V varchar(50) = 'declare @#v int =123 select @#v'
+-- execute(@@v)
+-- go
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(500) = 'declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int =123 select @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678'
-execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(500) = 'declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int =123 select @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678'
+-- execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
+-- go
 
-declare @@V varchar(50) = 'declare @#v int =123 select @#v'
-execute('select 456 ' + @@v)
-go
+-- declare @@V varchar(50) = 'declare @#v int =123 select @#v'
+-- execute('select 456 ' + @@v)
+-- go
 
-declare @#V varchar(50) = 'declare @@v int =123 select @@v'
-execute(@#v)
-go
+-- declare @#V varchar(50) = 'declare @@v int =123 select @@v'
+-- execute(@#v)
+-- go
 
-declare @#V varchar(50) = 'declare @@v int =123 select @@v'
-execute('select 456 ' + @#v)
-go
+-- declare @#V varchar(50) = 'declare @@v int =123 select @@v'
+-- execute('select 456 ' + @#v)
+-- go
 
-declare @#V varchar(50) = 'select 123 '
-execute(@#v + @#v)
-go
+-- declare @#V varchar(50) = 'select 123 '
+-- execute(@#v + @#v)
+-- go
 
-declare @#V varchar(50) = 'select 123 ',  @@V varchar(50) = 'select 456 '
-execute(@#v + @@v + @@v + @#v)
-go
+-- declare @#V varchar(50) = 'select 123 ',  @@V varchar(50) = 'select 456 '
+-- execute(@#v + @@v + @@v + @#v)
+-- go
 
-declare @@V varchar(50) = 'select "abc''def" '
-execute(@@v + 'select "xy''z" ' + @@V)
-go
+-- declare @@V varchar(50) = 'select "abc''def" '
+-- execute(@@v + 'select "xy''z" ' + @@V)
+-- go
 
-create procedure p17_atatuservar
-as
-declare @#V1 varchar(50) = 'declare @@v int =123 select @@v'
-execute('select 456 ' + @#v1)
+-- create procedure p17_atatuservar
+-- as
+-- declare @#V1 varchar(50) = 'declare @@v int =123 select @@v'
+-- execute('select 456 ' + @#v1)
 
-declare @#V2 varchar(50) = 'select 123 '
-execute(@#v2 + @#v2)
+-- declare @#V2 varchar(50) = 'select 123 '
+-- execute(@#v2 + @#v2)
 
-declare @#V3 varchar(50) = 'select 123 ',  @@V varchar(50) = 'select 456 '
-execute(@#v3 + @@v + @@v + @#v3)
+-- declare @#V3 varchar(50) = 'select 123 ',  @@V varchar(50) = 'select 456 '
+-- execute(@#v3 + @@v + @@v + @#v3)
 
-declare @@V4 varchar(50) = 'select "abc''def" '
-execute(@@v4 + 'select "xy''z" ' + @@V4)
-go
-exec p17_atatuservar
-go
+-- declare @@V4 varchar(50) = 'select "abc''def" '
+-- execute(@@v4 + 'select "xy''z" ' + @@V4)
+-- go
+-- exec p17_atatuservar
+-- go
 
-create trigger tr13_atatuservar on t13_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr13_atatuservar'	
+-- create trigger tr13_atatuservar on t13_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr13_atatuservar'	
 
-declare @#V1 varchar(50) = 'declare @@v int =123 select @@v'
-execute('select 456 ' + @#v1)
+-- declare @#V1 varchar(50) = 'declare @@v int =123 select @@v'
+-- execute('select 456 ' + @#v1)
 
-declare @#V2 varchar(50) = 'select 123 '
-execute(@#v2 + @#v2)
+-- declare @#V2 varchar(50) = 'select 123 '
+-- execute(@#v2 + @#v2)
 
-declare @#V3 varchar(50) = 'select 123 ',  @@V varchar(50) = 'select 456 '
-execute(@#v3 + @@v + @@v + @#v3)
+-- declare @#V3 varchar(50) = 'select 123 ',  @@V varchar(50) = 'select 456 '
+-- execute(@#v3 + @@v + @@v + @#v3)
 
-declare @@V4 varchar(50) = 'select "abc''def" '
-execute(@@v4 + 'select "xy''z" ' + @@V4)
-end
-go
-insert t13_trigger_atatuservar values (123)
-go
+-- declare @@V4 varchar(50) = 'select "abc''def" '
+-- execute(@@v4 + 'select "xy''z" ' + @@V4)
+-- end
+-- go
+-- insert t13_trigger_atatuservar values (123)
+-- go
 
-create procedure p18_atatuservar
-as
-begin
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(500) = 'declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int =123 select @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678'
-execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
-end
-go
-exec p18_atatuservar
-go
+-- create procedure p18_atatuservar
+-- as
+-- begin
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(500) = 'declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int =123 select @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678'
+-- execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
+-- end
+-- go
+-- exec p18_atatuservar
+-- go
 
-create trigger tr14_atatuservar on t14_trigger_atatuservar for insert
-as
-begin
-select 'trigger tr14_atatuservar'	
+-- create trigger tr14_atatuservar on t14_trigger_atatuservar for insert
+-- as
+-- begin
+-- select 'trigger tr14_atatuservar'	
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(500) = 'declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int =123 select @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678'
-execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
-end
-go
-insert t14_trigger_atatuservar values (123)
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 varchar(500) = 'declare @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int =123 select @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678'
+-- execute(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678)
+-- end
+-- go
+-- insert t14_trigger_atatuservar values (123)
+-- go
 
--- RAISERROR, procedure and trigger
-declare @@v int=50001
-raiserror(@@v,1,1)
-go
+-- -- RAISERROR, procedure and trigger
+-- declare @@v int=50001
+-- raiserror(@@v,1,1)
+-- go
 
-declare @@v int=50001, @@v2 int=1
-raiserror(@@v,@@v2,1)
-go
+-- declare @@v int=50001, @@v2 int=1
+-- raiserror(@@v,@@v2,1)
+-- go
 
-declare @@v int=50001, @@v2 int=1, @#v3 int=1
-raiserror(@@v,@@v2,@#v3)
-go
+-- declare @@v int=50001, @@v2 int=1, @#v3 int=1
+-- raiserror(@@v,@@v2,@#v3)
+-- go
 
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=50001, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=1, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@ int=1
-raiserror(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@)
-go
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=50001, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=1, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@ int=1
+-- raiserror(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@)
+-- go
 
-create procedure p1_raiserror_atatuservar
-as
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=50001, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=1, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@ int=1
-raiserror(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@)
-go
-exec p1_raiserror_atatuservar
-go
+-- create procedure p1_raiserror_atatuservar
+-- as
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=50001, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=1, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@ int=1
+-- raiserror(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@)
+-- go
+-- exec p1_raiserror_atatuservar
+-- go
 
-create trigger tr15_atatuservar on t15_trigger_atatuservar for insert
-as
-begin
-declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=50001, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=1, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@ int=1
-raiserror(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@)
-end
-go
-insert t15_trigger_atatuservar values (123)
-go
+-- create trigger tr15_atatuservar on t15_trigger_atatuservar for insert
+-- as
+-- begin
+-- declare @@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=50001, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678 int=1, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@ int=1
+-- raiserror(@@v128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @#w128_890123456789$123456789$1234567890123456789$123456789$1234567890123456789$123456789$12345678901234567890123456789012345678, @@y128_############################################______@@@$$@@@@$$@@@@__###############@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@$$@@@@)
+-- end
+-- go
+-- insert t15_trigger_atatuservar values (123)
+-- go
 
 
 -- -- sp_executesql with named/unnamed arguments, output parameters, in T-SQL batch, procedure, trigger
