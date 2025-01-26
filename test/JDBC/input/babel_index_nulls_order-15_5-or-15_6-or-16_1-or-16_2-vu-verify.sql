@@ -60,9 +60,9 @@ go
 -- Reset
 SET babelfish_showplan_all OFF
 go
-SELECT set_config('babelfishpg_tsql.explain_costs', 'on', false)
-go
 SELECT set_config('babelfishpg_tsql.enable_pg_hint', 'off', false)
+go
+SELECT set_config('babelfishpg_tsql.explain_costs', 'on', false)
 go
 SELECT set_config('enable_seqscan', 'on', false)
 go
