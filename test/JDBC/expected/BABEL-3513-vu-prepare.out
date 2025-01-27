@@ -43,7 +43,7 @@ Query Text: EXEC babel_3513_proc_1
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 13.912 ms
+Babelfish T-SQL Batch Parsing Time: 32.832 ms
 ~~END~~
 
 set babelfish_showplan_all off;
@@ -70,7 +70,7 @@ Query Text: EXEC babel_3513_proc_1
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.071 ms
+Babelfish T-SQL Batch Parsing Time: 0.088 ms
 ~~END~~
 
 
@@ -92,7 +92,7 @@ Merge Join
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 4.965 ms
+Babelfish T-SQL Batch Parsing Time: 11.750 ms
 ~~END~~
 
 

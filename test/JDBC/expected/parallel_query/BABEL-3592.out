@@ -447,7 +447,7 @@ babel_3592_t2 select * from babel_3592_t1 where b1 = 1
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.081 ms
+Babelfish T-SQL Batch Parsing Time: 0.078 ms
 ~~END~~
 
 

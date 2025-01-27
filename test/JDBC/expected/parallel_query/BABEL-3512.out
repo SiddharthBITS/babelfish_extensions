@@ -987,7 +987,7 @@ Query Text: EXEC babel_3512_comment_test_2
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.050 ms
+Babelfish T-SQL Batch Parsing Time: 0.071 ms
 ~~END~~
 
 
