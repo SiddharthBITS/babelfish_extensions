@@ -1,7 +1,6 @@
 -- simple variables in T-SQL batch
 set quoted_identifier off
 go
-
 declare @@v int = 2 select @@v
 go
 ~~START~~
@@ -3750,4 +3749,3 @@ int#!#text
 ~~END~~
 
 ~~ROW COUNT: 1~~
-

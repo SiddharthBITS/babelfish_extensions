@@ -182,11 +182,6 @@ public class JDBCCrossDialect {
             }
             else
             {
-                System.out.println();
-                System.out.println("---------------------------------------------");
-                System.out.println(entry);
-                System.out.println("---------------------------------------------");
-                System.out.println();
                 needSkipFirst = false;
             }
         }

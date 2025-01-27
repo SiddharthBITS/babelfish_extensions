@@ -349,12 +349,10 @@ public class TestQueryFile {
                         connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                         if(++filesProcessed >= fileList.size())
                         {
-                            System.out.println("CloseConCheck : All tests done");
                             try
                             {
                                 if (connection_bbl != null) 
                                 {
-                                    System.out.println("CloseConCheck : Final Connection closed");
                                     connection_bbl.close();
                                 }
                                 connection_bbl = null;
@@ -369,9 +367,6 @@ public class TestQueryFile {
                     {
                         e.printStackTrace();
                     }
-
-                    System.out.println("CloseConCheck : Version : " + majorVersion + "_" + minorVersion);
-                    System.out.println("CloseConCheck : Tests run : " + filesProcessed + " Files : " + fileList.size());
                     return;
                 }
             }
@@ -390,8 +385,6 @@ public class TestQueryFile {
                 {
                     e.printStackTrace();
                 }
-                System.out.println("CloseConCheck : Version : " + majorVersion + "_" + minorVersion);
-                System.out.println("CloseConCheck : Tests run : " + filesProcessed + " Files : " + fileList.size());
                 return;
             }
         }
@@ -410,8 +403,6 @@ public class TestQueryFile {
             {
                 e.printStackTrace();
             }
-            System.out.println("CloseConCheck : Version : " + majorVersion + "_" + minorVersion);
-            System.out.println("CloseConCheck : Tests run : " + filesProcessed + " Files : " + fileList.size());
             return;
         }
     }
