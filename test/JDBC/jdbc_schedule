@@ -10,7 +10,6 @@
 
 all
 
-
 # BABEL-SP_FKEYS test is very slow and causing github action timeout.
 
 # JDBC bulk insert API seems to call SET FMTONLY ON without calling SET FMTONLY OFF, causing some spurious test failures.
@@ -541,5 +540,3 @@ ignore#!#trim-before-15_11-or-16_7-vu-cleanup
 
 # getting timed out (TODO: BABEL-5353)
 ignore#!#BABEL-SP_TABLE_PRIVILEGES
-
-
