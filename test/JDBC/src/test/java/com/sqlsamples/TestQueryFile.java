@@ -277,56 +277,45 @@ public class TestQueryFile {
         ResultSet rs = null;
         
         // Query against database to find test version
-        try
-        {
-            connectionString = createSQLServerConnectionString(URL, tsql_port, databaseName, user, password);
-            getVersionCon = DriverManager.getConnection(connectionString);
-
-            stmt = getVersionCon.createStatement();
-            rs = stmt.executeQuery("SELECT @@VERSION;");
+        try{
+            getVersionCon = DriverManager.getConnection(createSQLServerConnectionString(URL, tsql_port, databaseName, user, password));
+            rs = getVersionCon.createStatement().executeQuery("SELECT @@VERSION;");
 
             int columnCount = rs.getMetaData().getColumnCount();
-
             StringBuilder queryOutputBuilder = new StringBuilder();
+
             while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) 
-                {
+                for (int i = 1; i <= columnCount; i++) {
                     queryOutputBuilder.append(rs.getString(i) + " ");
                 }
             }
-            String queryOutput = queryOutputBuilder.toString();
 
+            String queryOutput = queryOutputBuilder.toString();
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
             Matcher matcher = pattern.matcher(queryOutput);
 
-            if(matcher.find())
-            {
+            if(matcher.find()){
                 String versionString = matcher.group(1);
                 majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
                 minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
             }
-            else
-            {
+            else{
                 majorVersion = 0;
                 minorVersion = 0;
             }
 
-            try
-            {
-                if (getVersionCon != null) 
-                {
+            try{
+                if (getVersionCon != null) {
                     getVersionCon.close();
                 }
                 getVersionCon = null;
             }
-            catch(Exception e)
-            {
+            catch(Exception e){
                 e.printStackTrace();
             }
             return;
         } 
-        catch (SQLException e)
-        {
+        catch (SQLException e){
             majorVersion = 0;
             minorVersion = 0;
             System.out.println("Error executing query: " + e.getMessage());
@@ -344,63 +333,49 @@ public class TestQueryFile {
                     return;
                 }
                 else{
-                    try
-                    {
+                    try{
                         connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
-                        if(++filesProcessed >= fileList.size())
-                        {
-                            try
-                            {
-                                if (connection_bbl != null) 
-                                {
+                        if(++filesProcessed >= fileList.size()){
+                            try{
+                                if (connection_bbl != null){
                                     connection_bbl.close();
                                 }
                                 connection_bbl = null;
                             }
-                            catch(Exception e)
-                            {
+                            catch(Exception e){
                                 e.printStackTrace();
                             }
                         }
                     }
-                    catch(Exception e)
-                    {
+                    catch(Exception e){
                         e.printStackTrace();
                     }
                     return;
                 }
             }
-            else
-            {
-                try
-                {
-                    if (connection_bbl != null) 
-                    {
+            else{
+                try{
+                    if (connection_bbl != null){
                         connection_bbl.close();
                     }
                     connection_bbl = null;
                     filesProcessed++;
                 }
-                catch(Exception e)
-                {
+                catch(Exception e){
                     e.printStackTrace();
                 }
                 return;
             }
         }
-        else
-        {
-            try
-            {
-                if (connection_bbl != null) 
-                {
+        else{
+            try{
+                if (connection_bbl != null){
                     connection_bbl.close();
                 }
                 connection_bbl = null;
                 filesProcessed++;
             }
-            catch(Exception e)
-            {
+            catch(Exception e){
                 e.printStackTrace();
             }
             return;
