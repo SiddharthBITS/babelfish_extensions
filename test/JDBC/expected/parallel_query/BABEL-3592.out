@@ -98,7 +98,7 @@ Query Text: EXEC babel_3592_insert_multiline
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.050 ms
+Babelfish T-SQL Batch Parsing Time: 0.089 ms
 ~~END~~
 
 
@@ -115,7 +115,7 @@ Query Text: EXEC babel_3592_insert_singleline
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.073 ms
+Babelfish T-SQL Batch Parsing Time: 0.117 ms
 ~~END~~
 
 
@@ -186,7 +186,7 @@ Query Text: EXEC babel_3592_insert_multiline
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.048 ms
+Babelfish T-SQL Batch Parsing Time: 0.083 ms
 ~~END~~
 
 
@@ -203,7 +203,7 @@ Query Text: EXEC babel_3592_updates_singleline
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.073 ms
+Babelfish T-SQL Batch Parsing Time: 0.083 ms
 ~~END~~
 
 
@@ -275,7 +275,7 @@ Query Text: EXEC babel_3592_insert_multiline
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.064 ms
+Babelfish T-SQL Batch Parsing Time: 0.078 ms
 ~~END~~
 
 
@@ -292,7 +292,7 @@ Query Text: EXEC babel_3592_delete_singleline
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.055 ms
+Babelfish T-SQL Batch Parsing Time: 0.079 ms
 ~~END~~
 
 
@@ -362,21 +362,17 @@ Query Text: EXEC babel_3592_proc_mixed_statements
         ->  Index Scan using index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836 on babel_3592_t1
               Index Cond: (b1 = 1)
   Query Text: select/*+ nestloop(babel_3592_t1 babel_3592_t2) leading(babel_3592_t1 babel_3592_t2)*/ * from babel_3592_t1 inner      join babel_3592_t2 on babel_3592_t1.a1 = babel_3592_t2.a2
-  ->  Gather
-        Workers Planned: 3
-        ->  Nested Loop
-              ->  Parallel Seq Scan on babel_3592_t1
-              ->  Index Scan using babel_3592_t2_pkey on babel_3592_t2
-                    Index Cond: (a2 = babel_3592_t1.a1)
+  ->  Nested Loop
+        ->  Seq Scan on babel_3592_t1
+        ->  Index Scan using babel_3592_t2_pkey on babel_3592_t2
+              Index Cond: (a2 = babel_3592_t1.a1)
   Query Text: select/*+ mergejoin(babel_3592_t1 babel_3592_t2) leading(babel_3592_t1 babel_3592_t2)*/ * from babel_3592_t1 inner      
      join babel_3592_t2
       on babel_3592_t1.a1 = babel_3592_t2.a2
-  ->  Gather
-        Workers Planned: 1
-        ->  Merge Join
-              Merge Cond: (babel_3592_t1.a1 = babel_3592_t2.a2)
-              ->  Parallel Index Scan using babel_3592_t1_pkey on babel_3592_t1
-              ->  Index Scan using babel_3592_t2_pkey on babel_3592_t2
+  ->  Merge Join
+        Merge Cond: (babel_3592_t1.a1 = babel_3592_t2.a2)
+        ->  Index Scan using babel_3592_t1_pkey on babel_3592_t1
+        ->  Index Scan using babel_3592_t2_pkey on babel_3592_t2
   Query Text: update/*+ indexscan(babel_3592_t1 index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836) */ babel_3592_t1 set a1 = 1 where b1 = 1
   ->  Update on babel_3592_t1
         ->  Index Scan using index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836 on babel_3592_t1
@@ -434,20 +430,17 @@ babel_3592_t2 select * from babel_3592_t1 where b1 = 1
               ->  Bitmap Index Scan on index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836
                     Index Cond: (b1 = 1)
   Query Text: select/*+ indexscan(babel_3592_t1 index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836) indexscan(babel_3592_t2 index_babel_3592_t2_b2babel_359155b730148d8fcf0167f32edb84e3f7d) */ * from babel_3592_t1                                    , babel_3592_t2                                     where b1 = 1 and b2 = 1
-  ->  Gather
-        Workers Planned: 1
-        Single Copy: true
-        ->  Nested Loop
-              ->  Index Scan using index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836 on babel_3592_t1
-                    Index Cond: (b1 = 1)
-              ->  Materialize
-                    ->  Index Scan using index_babel_3592_t2_b2babel_359155b730148d8fcf0167f32edb84e3f7d on babel_3592_t2
-                          Index Cond: (b2 = 1)
+  ->  Nested Loop
+        ->  Index Scan using index_babel_3592_t1_b1babel_35976c64b612d1f74e2768783beca3bf836 on babel_3592_t1
+              Index Cond: (b1 = 1)
+        ->  Materialize
+              ->  Index Scan using index_babel_3592_t2_b2babel_359155b730148d8fcf0167f32edb84e3f7d on babel_3592_t2
+                    Index Cond: (b2 = 1)
 ~~END~~
 
 ~~START~~
 text
-Babelfish T-SQL Batch Parsing Time: 0.078 ms
+Babelfish T-SQL Batch Parsing Time: 0.080 ms
 ~~END~~
 
 
@@ -456,8 +449,15 @@ select set_config('babelfishpg_tsql.enable_pg_hint', 'off', false);
 go
 ~~START~~
 text
-on
+Query Text: select set_config('babelfishpg_tsql.enable_pg_hint', 'off', false)
+Result
 ~~END~~
+
+~~START~~
+text
+Babelfish T-SQL Batch Parsing Time: 0.121 ms
+~~END~~
+
 
 set babelfish_showplan_all off
 go

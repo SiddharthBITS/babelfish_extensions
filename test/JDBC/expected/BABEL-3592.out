@@ -449,8 +449,15 @@ select set_config('babelfishpg_tsql.enable_pg_hint', 'off', false);
 go
 ~~START~~
 text
-off
+Query Text: select set_config('babelfishpg_tsql.enable_pg_hint', 'off', false)
+Result
 ~~END~~
+
+~~START~~
+text
+Babelfish T-SQL Batch Parsing Time: 0.121 ms
+~~END~~
+
 
 set babelfish_showplan_all off
 go
