@@ -329,7 +329,7 @@ public class TestQueryFile {
         {
             majorVersion = 0;
             minorVersion = 0;
-            System.err.println("Error executing query: " + e.getMessage());
+            System.out.println("Error executing query: " + e.getMessage());
         }
 
         summaryLogger.info("Started test suite. Now running tests...");
