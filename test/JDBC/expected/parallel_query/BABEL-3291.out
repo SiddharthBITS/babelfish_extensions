@@ -77,8 +77,9 @@ select set_config('babelfishpg_tsql.enable_pg_hint', 'off', false);
 go
 ~~START~~
 text
-on
+off
 ~~END~~
+
 
 drop table babel_3291_t1
 go
