@@ -35,15 +35,6 @@ jobs:
           export DEBIAN_FRONTEND=noninteractive
           sudo -E apt-get install krb5-admin-server krb5-kdc krb5-user libkrb5-dev -y -qq
         shell: bash
-
-      - name: Build Modified Postgres using ${{env.ENGINE_BRANCH_16}}
-        id: build-modified-postgres-16
-        if: always() && steps.install-kerberos-dependencies.outcome == 'success'
-        uses: ./.github/composite-actions/build-modified-postgres
-        with:
-          engine_branch: ${{env.ENGINE_BRANCH_16}}
-          install_dir: ${{env.INSTALL_DIR_16}}
-      
       
       - name: Build Modified Postgres using ${{env.ENGINE_BRANCH_OLD}}
         id: build-modified-postgres-old
