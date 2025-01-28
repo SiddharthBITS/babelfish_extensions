@@ -323,7 +323,7 @@ public class TestQueryFile {
 
         summaryLogger.info("Started test suite. Now running tests...");
     }
-
+    
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
@@ -385,7 +385,6 @@ public class TestQueryFile {
     // write summary log after all tests have been executed
     @AfterAll
     public static void logSummary() {
-
         int passed = 0;
         int failed = 0;
         int maxlen = 0;

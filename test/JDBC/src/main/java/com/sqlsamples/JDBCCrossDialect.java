@@ -169,7 +169,7 @@ public class JDBCCrossDialect {
         while (iterator.hasNext()) {
             Map.Entry<String, Connection> entry = iterator.next();
             Connection connection = entry.getValue();
-            if (!needSkipFirst){
+            if (!needSkipFirst) {
                 try {
                     connection.close();
                 } catch (SQLException e) {
