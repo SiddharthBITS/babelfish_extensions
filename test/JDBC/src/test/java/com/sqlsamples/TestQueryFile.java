@@ -274,7 +274,7 @@ public class TestQueryFile {
         ResultSet rs = null;
         
         // Query against database to find test version
-        try{
+        try {
             getVersionCon = DriverManager.getConnection(createSQLServerConnectionString(URL, tsql_port, databaseName, user, password));
             rs = getVersionCon.createStatement().executeQuery("SELECT @@VERSION;");
 
@@ -291,28 +291,28 @@ public class TestQueryFile {
             Pattern pattern = Pattern.compile("PostgreSQL (\\d+\\.\\d+)");
             Matcher matcher = pattern.matcher(queryOutput);
 
-            if(matcher.find()){
+            if (matcher.find()) {
                 String versionString = matcher.group(1);
                 majorVersion = Integer.parseInt(versionString.split("\\.")[0]);
                 minorVersion = Integer.parseInt(versionString.split("\\.")[1]);
             }
-            else{
+            else {
                 majorVersion = 0;
                 minorVersion = 0;
             }
 
-            try{
+            try {
                 if (getVersionCon != null) {
                     getVersionCon.close();
                 }
                 getVersionCon = null;
             }
-            catch(Exception e){
+            catch (Exception e) {
                 e.printStackTrace();
             }
             return;
         } 
-        catch (SQLException e){
+        catch (SQLException e) {
             majorVersion = 0;
             minorVersion = 0;
             System.out.println("Error executing query: " + e.getMessage());
@@ -324,28 +324,28 @@ public class TestQueryFile {
     // close connections that are not null after every test
     @AfterEach
     public void closeConnections() throws SQLException, ClassNotFoundException, Throwable {
-        if((majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)) && allowConnectionReset){
-            if(connection_bbl == null){
+        if ((majorVersion > 16 || (majorVersion == 16 && minorVersion >= 6)) && allowConnectionReset) {
+            if (connection_bbl == null) {
                 return;
             }
-            else{
-                try{
+            else {
+                try {
                     connection_bbl.createStatement().execute("EXEC sys.sp_reset_connection");
                 }
-                catch(Exception e){
+                catch (Exception e) {
                     e.printStackTrace();
                 }
                 return;
             }
         }
-        else{
-            try{
-                if (connection_bbl != null){
+        else {
+            try {
+                if (connection_bbl != null) {
                     connection_bbl.close();
                 }
                 connection_bbl = null;
             }
-            catch(Exception e){
+            catch (Exception e) {
                 e.printStackTrace();
             }
             return;

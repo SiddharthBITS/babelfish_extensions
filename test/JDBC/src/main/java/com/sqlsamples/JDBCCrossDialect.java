@@ -5,7 +5,6 @@ import org.apache.logging.log4j.*;
 import java.util.*;
 import java.io.BufferedWriter;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -176,7 +175,7 @@ public class JDBCCrossDialect {
                     handleSQLExceptionWithFile(e, bw, logger);
                 }
             }
-            else{
+            else {
                 needSkipFirst = false;
             }
         }
