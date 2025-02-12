@@ -143,7 +143,7 @@ jobs:
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "SELECT pg_reload_conf();"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
           sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "SELECT @@version GO"
-          sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER ROLE runner SET search_path TO "PG_CATALOG";"
+          sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER ROLE runner SET search_path TO PG_CATALOG;"
 
       - name: Run JDBC Tests
         id: jdbc
