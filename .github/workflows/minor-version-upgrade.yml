@@ -143,7 +143,7 @@ jobs:
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "SELECT pg_reload_conf();"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
           sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "SELECT @@version GO"
-          sqlcmd -S 10.15.29.146 -U jdbc_user -P 12345678 -Q "ALTER USER runner WITH DEFAULT_SCHEMA = pg_catalog;"
+          sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER USER runner WITH DEFAULT_SCHEMA = pg_catalog;"
 
       - name: Run JDBC Tests
         id: jdbc
