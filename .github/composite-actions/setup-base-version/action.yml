@@ -154,6 +154,7 @@ runs:
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "CALL sys.initialize_babelfish('jdbc_user');"
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
         sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "SELECT @@version GO"
+        sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER ROLE runner SET search_path TO "PG_CATALOG";"
       shell: bash
 
     - name: Change migration mode to multi-db
