@@ -7,7 +7,7 @@ CREATE SCHEMA sys;
 GRANT USAGE ON SCHEMA sys TO PUBLIC;
 
 
-SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
+SELECT set_config('search_path', 'sys, pg_catalog', false);
 
 #include "money/fixeddecimal--1.1.0_base_parallel.sql"
 #include "money/fixeddecimal--parallelaggs.sql"

@@ -902,4 +902,4 @@ CREATE OR REPLACE VIEW information_schema_tsql.schemata AS
 
 GRANT SELECT ON information_schema_tsql.schemata TO PUBLIC;
 
-SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
+SELECT set_config('search_path', 'sys, pg_catalog', false);
