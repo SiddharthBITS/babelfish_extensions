@@ -115,11 +115,12 @@ jobs:
             sudo echo "host    all             all             0.0.0.0/0                md5"
             sudo echo "host    all             all             ::/0                     md5"
           } > pg_hba.conf
+          sudo ~/${{env.OLD_INSTALL_DIR}}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "ALTER ROLE runner SET search_path TO PG_CATALOG"
+          sudo ~/${{env.OLD_INSTALL_DIR}}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "\dx"
           ~/${{env.OLD_INSTALL_DIR}}/bin/pg_ctl -c -D ~/${{env.OLD_INSTALL_DIR}}/data -l ~/${{env.OLD_INSTALL_DIR}}/data/logfile restart
           cd ~/work/babelfish_extensions/babelfish_extensions/
           sudo ~/${{env.OLD_INSTALL_DIR}}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -v user="jdbc_user" -v db="babelfish_db" -v migration_mode="multi-db" -v tsql_port="1433" -f .github/scripts/create_extension.sql
           sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "SELECT @@version GO"
-          sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER USER runner WITH DEFAULT_SCHEMA = pg_catalog; GO"
         shell: bash
 
       - uses: actions/checkout@v2
