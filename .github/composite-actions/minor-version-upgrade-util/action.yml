@@ -65,7 +65,7 @@ runs:
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "ALTER EXTENSION "babelfishpg_tsql" UPDATE;"
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
         sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "SELECT @@version GO"
-        sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER USER runner WITH DEFAULT_SCHEMA = pg_catalog;"
+        sqlcmd -S localhost -U jdbc_user -P 12345678 -Q "ALTER USER runner WITH DEFAULT_SCHEMA = pg_catalog; GO"
       shell: bash
 
     - uses: actions/checkout@v2
