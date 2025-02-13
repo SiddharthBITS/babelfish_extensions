@@ -141,8 +141,6 @@ runs:
         if [[ ${{ inputs.server_collation_name }} != "default" ]]; then
           sudo echo "babelfishpg_tsql.server_collation_name = '${{ inputs.server_collation_name }}'" >> ~/${{ inputs.install_dir }}/data/postgresql.conf
         fi
-        sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "ALTER ROLE runner SET search_path TO PG_CATALOG"
-        sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "\dx"
         ~/${{ inputs.install_dir }}/bin/pg_ctl -c -D ~/${{ inputs.install_dir }}/data/ -l logfile restart
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "CREATE USER jdbc_user WITH SUPERUSER CREATEDB CREATEROLE PASSWORD '12345678' INHERIT;"
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "DROP DATABASE IF EXISTS babelfish_db;"
