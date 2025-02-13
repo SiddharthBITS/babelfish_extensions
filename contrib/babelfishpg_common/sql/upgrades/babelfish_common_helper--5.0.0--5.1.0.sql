@@ -5,7 +5,7 @@
 -- complain if script is sourced in psql, rather than via ALTER EXTENSION
 \echo Use "ALTER EXTENSION ""babelfishpg_common"" UPDATE TO '5.1.0'" to load this file. \quit
 
-SELECT set_config('search_path', 'sys, pg_catalog', false);
+SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
 
 CREATE OR REPLACE FUNCTION sys.nvarcharvarbinary(sys.NVARCHAR, integer, boolean)
 RETURNS sys.BBF_VARBINARY

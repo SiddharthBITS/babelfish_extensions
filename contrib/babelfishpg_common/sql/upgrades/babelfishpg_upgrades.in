@@ -3,7 +3,7 @@
  */
 
 \echo Use "ALTER EXTENSION ""babelfishpg_common"" UPDATE TO "CUR_VERSION"" to load this file. \quit
-SELECT set_config('search_path', 'sys, pg_catalog', false);
+SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
 
 #define QUOTEME_(M)       #M
 #define QUOTEME(M)       QUOTEME_(M)

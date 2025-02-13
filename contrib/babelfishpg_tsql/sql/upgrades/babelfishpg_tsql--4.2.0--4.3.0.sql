@@ -2,7 +2,7 @@
 \echo Use "ALTER EXTENSION ""babelfishpg_tsql"" UPDATE TO '4.3.0'" to load this file. \quit
 
 -- add 'sys' to search path for the convenience
-SELECT set_config('search_path', 'sys, pg_catalog', false);
+SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
 
 -- Drops an object if it does not have any dependent objects.
 -- Is a temporary procedure for use by the upgrade script. Will be dropped at the end of the upgrade.
@@ -6719,7 +6719,7 @@ CREATE OR REPLACE VIEW information_schema_tsql.columns_internal AS
 			CAST(ext.orig_name AS sys.nvarchar(128)) AS "TABLE_SCHEMA",
 			CAST(
 				COALESCE(
-					(SELECT pg_catalog.string_agg(
+					(SELECT string_agg(
 						CASE
 						WHEN option LIKE 'bbf_original_rel_name=%' THEN substring(option, 23 /* prefix length */)
 						ELSE NULL
@@ -6730,7 +6730,7 @@ CREATE OR REPLACE VIEW information_schema_tsql.columns_internal AS
 
 			CAST(
 				COALESCE(
-					(SELECT pg_catalog.string_agg(
+					(SELECT string_agg(
 						CASE
 						WHEN option LIKE 'bbf_original_name=%' THEN substring(option, 19 /* prefix length */)
 						ELSE NULL
@@ -6836,7 +6836,7 @@ CREATE OR REPLACE VIEW information_schema_tsql.tables AS
 		   CAST(ext.orig_name AS sys.nvarchar(128)) AS "TABLE_SCHEMA",
 		   CAST(
 				COALESCE(
-					(SELECT pg_catalog.string_agg(
+					(SELECT string_agg(
 						CASE
 						WHEN option LIKE 'bbf_original_rel_name=%' THEN substring(option, 23)
 						ELSE NULL

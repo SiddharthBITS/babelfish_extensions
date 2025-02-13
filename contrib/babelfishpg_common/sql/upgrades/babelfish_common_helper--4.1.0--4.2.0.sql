@@ -5,7 +5,7 @@
 -- complain if script is sourced in psql, rather than via ALTER EXTENSION
 \echo Use "ALTER EXTENSION ""babelfishpg_common"" UPDATE TO "4.2.0"" to load this file. \quit
 
-SELECT set_config('search_path', 'sys, pg_catalog', false);
+SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
 
 -- Operators between int4 and numeric 
 -- create support function for int4 and numeric comparison

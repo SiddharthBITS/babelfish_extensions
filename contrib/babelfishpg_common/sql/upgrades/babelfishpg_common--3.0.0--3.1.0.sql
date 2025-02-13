@@ -1,7 +1,7 @@
 -- complain if script is sourced in psql, rather than via ALTER EXTENSION
 \echo Use "ALTER EXTENSION ""babelfishpg_common"" UPDATE TO '3.1.0'" to load this file. \quit
 
-SELECT set_config('search_path', 'sys, pg_catalog', false);
+SELECT set_config('search_path', 'sys, '||current_setting('search_path'), false);
 
 CREATE OR REPLACE FUNCTION sys.bigint_avg(INTERNAL)
 RETURNS BIGINT
