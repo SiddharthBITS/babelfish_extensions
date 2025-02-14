@@ -143,7 +143,6 @@ runs:
         fi
         ~/${{ inputs.install_dir }}/bin/pg_ctl -c -D ~/${{ inputs.install_dir }}/data/ -l logfile restart
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "BEGIN; ALTER ROLE runner SET search_path TO PG_CATALOG; COMMIT;"
-        sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "\dx"
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "CREATE USER jdbc_user WITH SUPERUSER CREATEDB CREATEROLE PASSWORD '12345678' INHERIT;"
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "DROP DATABASE IF EXISTS babelfish_db;"
         sudo ~/${{ inputs.install_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "CREATE DATABASE babelfish_db OWNER jdbc_user;"
