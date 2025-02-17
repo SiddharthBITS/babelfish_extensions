@@ -37,7 +37,7 @@ runs:
         echo 'Updating babelfish extensions...'
         cd ~/work/babelfish_extensions/babelfish_extensions/
         ~/${{ inputs.pg_new_dir }}/bin/pg_ctl -c -D ~/${{ inputs.pg_new_dir }}/data -l ~/${{ inputs.pg_new_dir }}/data/logfile start
-        sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "BEGIN; ALTER ROLE runner SET search_path TO PG_CATALOG; COMMIT;"
+        sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "ALTER ROLE runner SET search_path TO PG_CATALOG;"
         sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "BEGIN; ALTER EXTENSION babelfishpg_common UPDATE; ALTER EXTENSION babelfishpg_tsql UPDATE; COMMIT;"
         sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
         echo 'Reset bbf database settings...'

@@ -154,7 +154,7 @@ runs:
 
         # Create and initialise Babelfish extensions in the new server to perform restore.
         sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -v user="jdbc_user" -v db="babelfish_db" -v migration_mode=${{inputs.migration_mode}} -v tsql_port="1433" -f .github/scripts/create_extension.sql
-        sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "BEGIN; ALTER ROLE runner SET search_path TO PG_CATALOG; COMMIT;"
+        sudo ~/${{ inputs.pg_new_dir }}/bin/psql -v ON_ERROR_STOP=1 -d postgres -U runner -c "ALTER ROLE runner SET search_path TO PG_CATALOG;"
 
         if [[ ${{ inputs.database_level }} == false ]];then
           echo "Starting to restore whole Babelfish physical database"
