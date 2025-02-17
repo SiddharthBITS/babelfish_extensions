@@ -139,7 +139,7 @@ jobs:
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "BEGIN; ALTER ROLE runner SET search_path TO PG_CATALOG; COMMIT;"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "\dx"
-          sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "ALTER EXTENSION "babelfishpg_common" UPDATE; ALTER EXTENSION "babelfishpg_tsql" UPDATE;"
+          sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "BEGIN; ALTER EXTENSION "babelfishpg_common" UPDATE; ALTER EXTENSION "babelfishpg_tsql" UPDATE; COMMIT;"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "ALTER SYSTEM SET track_functions = 'pl';"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "ALTER SYSTEM SET babelfishpg_tsql.migration_mode = 'multi-db';"
           sudo ~/psql/bin/psql -v ON_ERROR_STOP=1 -d babelfish_db -U runner -c "SELECT pg_reload_conf();"
